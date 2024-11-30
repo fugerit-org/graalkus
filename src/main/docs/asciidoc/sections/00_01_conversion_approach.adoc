@@ -1,0 +1,31 @@
+[#conversion-approach]
+=== Conversion approach
+
+[mermaid, title="JIT to AOT conversion approach"]
+....
+flowchart TD
+    A --> B
+    B --> CF
+    B --> |Assest features| CM
+    A(Original JIT Application)
+    B{Is full AOT
+    conversion possible?}
+    subgraph CM [Mixed conversion approach]
+        E(AOT Features Application)
+        F(JIT Features Application)
+    end
+    subgraph CF [Full conversion approach]
+        C(AOT Application)
+    end
+....
+
+Usually I took into consideration two possible approach when migrating a JIT application to AOT :
+
+[#full-approach]
+. Full approach - when all the features can be easily configured to be included in a native build
+[#mixed-approach]
+. Mixed approach - when not all features can be converted to AOT for any reason, for instance :
+    - costs - we need to rewrite the feature and we decide conversion is not worth
+    - technical limitation - some feature simply relies on some technology which cannot be converted (i.e. a very old library)
+
+Often the mixed approach could be a good idea, because conversion can be sometimes complex and it is easier to isolate the features to be converted. Maybe starting from the easier and iterate on the others in a later time.

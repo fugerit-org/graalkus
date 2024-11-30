@@ -1,0 +1,19 @@
+[#demo-scenario]
+=== Demo scenario
+
+This demo is inspired by a real microservice I configured for AOT some time ago.
+
+The scenario we take in consideration is a JIT application used generate documents in various formats (HTML, MarkDown, AsciiDoc and PDF), through rest services.
+
+Let's define every format as a feature, and the load is roughly this :
+
+. HTML : 40%
+. MarkDown : 30%
+. AsciiDoc : 20%
+. PDF : 10%
+
+We will find out that PDF conversion it is not easy to implement.
+
+So we will use the xref:#mixed-approach[mixed approach], converting formats 1, 2, 3 only. So at the end the AOT Application will handle the 90% of the load, whereas the JIT Application will be left with only 10%.
+
+We can use an API gateway or some other technology to keep usage transparent for clients.
