@@ -1,0 +1,23 @@
+[#introduction]
+== Introduction
+
+In recent years the interest for going AOT has grown more and more among the java developers community.
+
+Some projects were born or added support for link:https://www.graalvm.org/[GraalVM] and native compilation. Just to name a few :
+
+- link:https://quarkus.io/[Quarkus]
+- link:https://spring.io/projects/spring-boot[Spring Boot]
+- link:https://micronaut.io/[Micronaut]
+- link:https://helidon.io/[Helidon]
+
+Using GraalVM has some great benefits (for instance faster startup and lower memory footprint) and a few limitations (configuration complexity, runs only on target environment).
+
+AOT may not be viable for all scenarios, but when it is possible to use if performances and costs can be reduced a lot.
+
+Starting in 2023 I've been using it more and more on the projects I'm working on.
+
+Talking with other developers interested in the technology, one big obstacle to GraalVM adoption is first of all configuration complexity (for features like reflection).
+
+link:https://github.com/fugerit-org/graalkus[Graalkus] is a simple microservice, based on Quarkus, that I created to share my personal experience on migrating JIT application to AOT.
+
+

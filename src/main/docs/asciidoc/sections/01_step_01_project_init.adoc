@@ -1,0 +1,32 @@
+[#step-01-project-creation]
+=== Project Initialization (JIT)
+
+We will create a project based on link:https://github.com/fugerit-org/fj-do[Venus], a Framework to produce documents in different output formats starting from an XML document model.
+
+Venus has a link:https://venusdocs.fugerit.org/guide/#maven-plugin-goal-init[maven plugin] to initialize a maven project with some flavours. I'm going to pick a link:https://quarkus.io/[Quarkus] application with the command :
+
+[source,ftl]
+----
+mvn org.fugerit.java:fj-doc-maven-plugin:init \
+-DgroupId=org.fugerit.java.demo \
+-DartifactId=graalkus \
+-Dflavour=quarkus-3 \
+-Dextensions=base,freemarker,mod-fop
+----
+
+This will create a maven project structure, with a rest service for document generation in html, adoc, markdown and pdf format.
+
+Just run :
+
+[source,shell]
+----
+mvn quarkus:dev
+----
+
+And access the swagger ui to check available paths :
+
+link:http://localhost:8080/q/swagger-ui/[http://localhost:8080/q/swagger-ui/]
+
+For instance the PDF version link:http://localhost:8080/doc/example.pdf[http://localhost:8080/doc/example.pdf] or the AsciiDoc one link:http://localhost:8080/doc/example.adoc[http://localhost:8080/doc/example.adoc].
+
+Ready for the next step?
