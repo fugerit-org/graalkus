@@ -4,3 +4,8 @@
 In this section we will describe how to develop our demo application :
 
 . xref:#step-01-project-creation[Project initialization (JIT)]
+
+Requirements
+
+- Oracle GraalVM (tested on 21.0.5)
+- Apache Maven (tested on 3.9.9)

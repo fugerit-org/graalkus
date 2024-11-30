@@ -75,18 +75,32 @@
     <dependency>
       <groupId>org.fugerit.java</groupId>
       <artifactId>fj-doc-base</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.fugerit.java</groupId>
       <artifactId>fj-doc-freemarker</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.fugerit.java</groupId>
-      <artifactId>fj-doc-mod-fop</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.fugerit.java</groupId>
       <artifactId>fj-doc-mod-opencsv</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -182,6 +196,26 @@
   </build>
   <profiles>
     <profile>
+      <id>jit</id>
+      <activation>
+        <property>
+          <name>!native</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.fugerit.java</groupId>
+          <artifactId>fj-doc-mod-fop</artifactId>
+          <exclusions>
+            <exclusion>
+              <groupId>xml-apis</groupId>
+              <artifactId>xml-apis</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
       <id>native</id>
       <activation>
         <property>
@@ -189,9 +223,22 @@
         </property>
       </activation>
       <properties>
-        <skipITs>false</skipITs>
+        <skipITs>true</skipITs>
         <quarkus.native.enabled>true</quarkus.native.enabled>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.fugerit.java</groupId>
+          <artifactId>fj-doc-mod-fop</artifactId>
+          <scope>provided</scope>
+          <exclusions>
+            <exclusion>
+              <groupId>xml-apis</groupId>
+              <artifactId>xml-apis</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+      </dependencies>
     </profile>
   </profiles>
 </project>

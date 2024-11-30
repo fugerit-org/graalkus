@@ -25,9 +25,9 @@
         <!-- type handler for asciidoc using freemarker -->
         <docHandler id="asciidoc-fm" info="adoc" type="org.fugerit.java.doc.freemarker.asciidoc.FreeMarkerAsciidocTypeHandlerUTF8" />
         <!-- Type handler generating xls:fo style sheet -->
-        <docHandler id="fo-fop" info="fo" type="org.fugerit.java.doc.mod.fop.FreeMarkerFopTypeHandlerUTF8" />
+        <docHandler id="fo-fop" info="fo" type="org.fugerit.java.doc.mod.fop.FreeMarkerFopTypeHandlerUTF8" unsafe="true"/>
         <!-- Type handler generating pdf -->
-        <docHandler id="pdf-fop" info="pdf" type="org.fugerit.java.doc.mod.fop.PdfFopTypeHandler">
+        <docHandler id="pdf-fop" info="pdf" type="org.fugerit.java.doc.mod.fop.PdfFopTypeHandler" unsafe="true">
             <docHandlerCustomConfig charset="UTF-8" fop-config-mode="classloader" fop-config-classloader-path="graalkus/fop-config.xml" fop-suppress-events="1"/>
         </docHandler>
         <!-- Type handler generating csv -->

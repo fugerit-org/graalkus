@@ -1,0 +1,141 @@
+[#step-02-going-aot]
+=== Going AOT
+
+As stated in link:https://quarkus.io/guides/building-native-image[Quarkus documentation], we try to build a native executable running :
+
+[source,shell]
+----
+mvn install -Dnative
+----
+
+Which will lead to a few errors, starting with :
+
+[source,txt]
+----
+Error: Detected a started Thread in the image heap. Thread name: Java2D Disposer. Threads running in the image generator are no longer running at image runtime. If these objects should not be stored in the image heap, you can use
+
+    '--trace-object-instantiation=java.lang.Thread'
+----
+
+It is often possible to achieve AOT compatibility tweaking a few parameters. GraalVM is very good at providing hints on what to do (like in the example above). There are also a few techniques helping to configure the application in order to create a native image (for instance the link:https://www.graalvm.org/22.0/reference-manual/native-image/Agent/[tracing agent]).
+
+Generally speaking the framework we are using, link:https://github.com/fugerit-org/fj-doc[Venus], is already configured for AOT. Unfortunately not all modules are native ready. In particular the link:https://venusdocs.fugerit.org/guide/#available-extensions[mod-fop extension] it is not easy to be built with GraalVM.
+
+This is partly explained in a link:https://github.com/apache/camel-quarkus/issues/5244[Quarkus Camel issue about pdfbox 2].
+
+Our goal is to show a demo for the xref:#mixed-approach[mixed JIT to AOT conversion approach].
+
+In this scenario we modify the applicatin to run both in JIT and AOT mode, but in latter the PDF document feature will be disabled.
+
+We will achive with three simple modifications.
+
+==== Update the maven pom file
+
+The main reason why we get the error is that GraalVM fails on this dependency at build time :
+
+[source,xml]
+----
+    <dependency>
+      <groupId>org.fugerit.java</groupId>
+      <artifactId>fj-doc-mod-fop</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+----
+
+So we will move it to the profiles sectionas and make it only available in JIT profile :
+
+[source,xml]
+----
+<profile>
+      <id>jit</id>
+      <activation>
+        <property>
+          <name>!native</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.fugerit.java</groupId>
+          <artifactId>fj-doc-mod-fop</artifactId>
+          <exclusions>
+            <exclusion>
+              <groupId>xml-apis</groupId>
+              <artifactId>xml-apis</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>native</id>
+      <activation>
+        <property>
+          <name>native</name>
+        </property>
+      </activation>
+      <properties>
+        <skipITs>true</skipITs>
+        <quarkus.native.enabled>true</quarkus.native.enabled>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.fugerit.java</groupId>
+          <artifactId>fj-doc-mod-fop</artifactId>
+          <scope>provided</scope>
+          <exclusions>
+            <exclusion>
+              <groupId>xml-apis</groupId>
+              <artifactId>xml-apis</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+      </dependencies>
+    </profile>
+----
+
+Of course the PDF document using Apache FOP will fail when running the native executables.
+
+==== Update the project config file
+
+This application use the file *src/main/resources/graalkus/fm-doc-process-config.xml* to load doc handlers classes by reflection, we will mark as *unsafe* the handlers not available in AOT mode :
+
+[source,xml]
+----
+<freemarker-doc-process-config>
+<!-- Type handler generating xls:fo style sheet -->
+<docHandler id="fo-fop" info="fo" type="org.fugerit.java.doc.mod.fop.FreeMarkerFopTypeHandlerUTF8" unsafe="true"/>
+<!-- Type handler generating pdf -->
+<docHandler id="pdf-fop" info="pdf" type="org.fugerit.java.doc.mod.fop.PdfFopTypeHandler" unsafe="true">
+</freemarker-doc-process-config>
+----
+
+==== Disable relevant tests
+
+We are going to add the JUnit 5 link:https://junit.org/junit5/docs/snapshot/user-guide/#writing-tests-conditional-execution-native[DisabledInNativeImage] annotation to the tests that would fail :
+
+[source,java]
+----
+    @Test
+    @DisabledInNativeImage
+    void testPdf() {
+        given().when().get("/doc/example.pdf").then().statusCode(200);
+    }
+----
+
+So now we can try again to build native image :
+
+[source,shell]
+----
+mvn package -Dnative
+----
+
+This time the build is successful and features for HTML, AsciiDoc and MarkDown documents will be available, for instance link:http://localhost:8080/doc/example.adoc[http://localhost:8080/doc/example.adoc], while the pdf version will fail link:http://localhost:8080/doc/example.pdf[http://localhost:8080/doc/example.pdf].
+
+So we have now a project which can be built both in JIT and AOT mode.
+
+Now it's time for the docker images.
