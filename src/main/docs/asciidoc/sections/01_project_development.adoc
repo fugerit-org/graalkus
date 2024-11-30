@@ -1,0 +1,6 @@
+[#part-1-project-development]
+== Project Development
+
+In this section we will describe how to develop our demo application :
+
+. xref:#step-01-project-creation[Project initialization (JIT)]
