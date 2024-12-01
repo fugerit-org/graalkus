@@ -1,5 +1,9 @@
 = Graalkus: A Quarkus MicroProfile Demo Migrating from JIT to AOT with GraalVM.
 
+NOTE: The cover image has been generated with the help of DALL·E
+
+<<<
+
 include::sections/00_introduction.adoc[]
 
 include::sections/00_01_conversion_approach.adoc[]

@@ -1,0 +1,14 @@
+:author: Matteo Franci
+:revnumber: v1.0.0
+:revdate: Decembet 01, 2024
+:email: m@fugerit.org
+:description: Graalkus: A Quarkus MicroProfile Demo Migrating from JIT to AOT with GraalVM.
+:keywords: GraalVM Quarkus Java GraalVM
+:encoding: utf-8
+:lang: en
+:toc: left
+:hardbreaks-option:
+:sectnums:
+:sectnumlevels: 3
+:!figure-caption:
+:!chapter-signifier:
