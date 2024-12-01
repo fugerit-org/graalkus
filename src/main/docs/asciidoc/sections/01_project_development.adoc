@@ -9,3 +9,4 @@ Requirements
 
 - Oracle GraalVM (tested on 21.0.5)
 - Apache Maven (tested on 3.9.9)
+- Container environment (i.e. docker, podman)
