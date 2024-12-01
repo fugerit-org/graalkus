@@ -2,4 +2,15 @@
 
 include::sections/00_introduction.adoc[]
 
+include::sections/00_01_conversion_approach.adoc[]
+
+include::sections/00_02_demo_scenario.adoc[]
+
 include::sections/01_project_development.adoc[]
+
+include::sections/01_step_01_project_init.adoc[]
+
+include::sections/01_step_02_going_aot.adoc[]
+
+include::sections/01_step_03_containers.adoc[]
+

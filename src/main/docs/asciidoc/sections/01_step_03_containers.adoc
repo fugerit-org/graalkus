@@ -1,0 +1,76 @@
+[#step-03-container-images]
+=== Container images
+
+In this step we are going to build and test the container image.
+
+==== JIT container
+
+First of all we build the application :
+
+[source,shell]
+----
+mvn package
+----
+
+Then build the container image :
+
+[source,shell]
+----
+docker build -f src/main/docker/Dockerfile.jvm -t graalkus-jit .
+----
+
+And launch it :
+
+[source,shell]
+----
+docker run --rm -p 8080:8080 --name graalkus-jit graalkus-jit
+----
+
+On my system quarkus starts in 0.458s.
+
+[source,txt]
+----
+__  ____  __  _____   ___  __ ____  ______
+--/ __ \/ / / / _ | / _ \/ //_/ / / / __/
+-/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/
+2024-12-01 00:50:30,285 INFO  [org.fug.jav.dem.gra.AppInit] (main) The application is starting...
+2024-12-01 00:50:30,333 INFO  [io.quarkus] (main) graalkus 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.17.2) started in 0.458s. Listening on: http://0.0.0.0:8080
+----
+
+==== AOT container
+
+After building the application :
+
+[source,shell]
+----
+mvn package -Dnative -Dquarkus.native.container-build=true
+----
+
+NOTE: this time we are going to use the link:https://quarkus.io/guides/building-native-image#container-runtime[quarkus.native.container-build] option, so the build will be handled by a container.
+
+We can now build the container :
+
+[source,shell]
+----
+docker build -f src/main/docker/Dockerfile.native-micro -t graalkus-aot .
+----
+
+And launch it :
+
+[source,shell]
+----
+docker run --rm -p 8080:8080 --name graalkus-aot graalkus-aot
+----
+
+This time quarkus starts in 0.020s, about 25 times faster than JIT version!
+
+[source,txt]
+----
+__  ____  __  _____   ___  __ ____  ______
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/
+2024-12-01 00:52:13,027 INFO  [org.fug.jav.dem.gra.AppInit] (main) The application is starting...
+2024-12-01 00:52:13,029 INFO  [io.quarkus] (main) graalkus 1.0.0-SNAPSHOT native (powered by Quarkus 3.17.2) started in 0.020s. Listening on: http://0.0.0.0:8080
+----
