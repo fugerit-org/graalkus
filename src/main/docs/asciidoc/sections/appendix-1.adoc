@@ -1,0 +1,49 @@
+[#appendix-1]
+== Appendix 1 : Going AOT in depth
+
+In xref:01_step_02_going_aot.adoc[Going AOT section] we just adapted our software with a few modifications.
+
+This was possible because :
+
+. The application is built on link:https://quarkus.io/[Quarkus] which is already native ready. All core modules are already supporting native image build.
+. link:https://github.com/fugerit-org/fj-doc[Venus] framework too is already pre-configure for native image build. For instance by configuring the native build args.
+
+[source,yaml]
+----
+quarkus:
+  native:
+    # if needed add -H:+UnlockExperimentalVMOptions
+    additional-build-args: -H:IncludeResources=graalkus/fm-doc-process-config.xml,\
+      -H:IncludeResources=graalkus/template/document.ftl
+----
+
+In a legacy application, not based on a native ready framework like Quarkus or Spring Boot, the conversion could be lengthier.
+
+One possible approach could be to split a monolith features in microservices and going AOT when possible.
+
+[mermaid, title="From legacy to AOT application"]
+....
+flowchart TD
+    G --> A
+    A --> B
+    A2 --> B
+    AN --> B
+    B --> C
+    B --> |Assest features| CM
+    F --> |iterate| B
+    B{Is full AOT
+    conversion possible?}
+    G(Legacy Monolith Application)
+    subgraph MA [Split in microservices]
+        A(JIT Microservice 1 Application)
+        A2(JIT Microservice 2 Application)
+        AN(JIT Microservice n Application)
+    end
+    subgraph CF [Full conversion approach]
+        C(AOT Application)
+    end
+    subgraph CM [Mixed conversion approach]
+        F(JIT Features Application)
+        E(AOT Features Application)
+    end
+....

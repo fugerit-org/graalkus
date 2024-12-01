@@ -1,0 +1,9 @@
+[#appendix-2]
+== Appendix 2 : Resources
+
+In this appendix there are some references to some useful documentation and resources.
+
+* link:https://quarkus.io/guides/[Quarkus documentation], especially ;
+    ** link:https://quarkus.io/guides/writing-native-applications-tips[Tips for writing native applications]
+    ** link:https://quarkus.io/guides/building-native-image[Building a Native Executable]
+* link:https://venusdocs.fugerit.org/guide/[Venus Documentation]

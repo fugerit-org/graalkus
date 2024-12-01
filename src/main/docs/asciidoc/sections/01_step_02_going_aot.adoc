@@ -27,9 +27,10 @@ Our goal is to show a demo for the xref:#mixed-approach[mixed JIT to AOT convers
 
 In this scenario we modify the applicatin to run both in JIT and AOT mode, but in latter the PDF document feature will be disabled.
 
-We will achive with three simple modifications.
+[#section-01-02-going-aot-steps]
+We will achieve with three simple modifications.
 
-==== Update the maven pom file
+==== 1. Update the maven pom file
 
 The main reason why we get the error is that GraalVM fails on this dependency at build time :
 
@@ -100,7 +101,7 @@ So we will move it to the profiles sectionas and make it only available in JIT p
 
 Of course the PDF document using Apache FOP will fail when running the native executables.
 
-==== Update the project config file
+==== 2. Update the project config file
 
 This application use the file *src/main/resources/graalkus/fm-doc-process-config.xml* to load doc handlers classes by reflection, we will mark as *unsafe* the handlers not available in AOT mode :
 
@@ -114,7 +115,7 @@ This application use the file *src/main/resources/graalkus/fm-doc-process-config
 </freemarker-doc-process-config>
 ----
 
-==== Disable relevant tests
+==== 3. Disable relevant tests
 
 We are going to add the JUnit 5 link:https://junit.org/junit5/docs/snapshot/user-guide/#writing-tests-conditional-execution-native[DisabledInNativeImage] annotation to the tests that would fail :
 
