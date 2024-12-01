@@ -53,6 +53,9 @@ jobs:
       - name: Convert AsciiDoc to HTML5 and PDF
         run: mvn clean asciidoctor:process-asciidoc@asciidoc-to-html asciidoctor:process-asciidoc@asciidoc-to-pdf -P docs
 
+      - name: Copy html
+        run: cp -fr src/main/docs/html/* target/site/
+
       - name: Setup Pages
         uses: actions/configure-pages@main
 

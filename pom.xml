@@ -338,7 +338,7 @@
                   <doctype>book</doctype>
                   <sourceDocumentName>index.adoc</sourceDocumentName>
                   <outputDirectory>${pdf-output-folder}</outputDirectory>
-                  <outputFile>${project.artifactId}-${project.version}.pdf</outputFile>
+                  <outputFile>${project.artifactId}.pdf</outputFile>
                   <attributes>
                     <pdf-theme>basic</pdf-theme>
                     <pdf-themesdir>${project.basedir}/src/main/docs/asciidoc/resources/themes</pdf-themesdir>
