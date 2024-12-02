@@ -1,0 +1,27 @@
+# CI with maven build and scan
+
+name: CI docker build
+
+on:
+  # Trigger analysis when pushing in master or pull requests, and when creating
+  # a pull request.
+  push:
+    branches:
+      - develop
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fugerit-org/psychic-actions/maven-container-publish@mcp
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          docker-file: './src/main/docker/Dockerfile.corretto-jvm'
+          docker-platforms: linux/amd64,linux/arm64
+          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }},${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
+
