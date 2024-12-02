@@ -1,12 +1,14 @@
 # graalkus
 
+[![HTML - Documentation](https://img.shields.io/badge/HTML-Documentation-blue?style=for-the-badge)](https://graalkus.fugerit.org/book/ "Go to project HTML documentation")
+[![PDF - Documentation](https://img.shields.io/badge/PDF-Documentation-red?style=for-the-badge)](https://graalkus.fugerit.org/book/graalkus.pdf "Go to project PDF documentation")
+
 [![Keep a Changelog v1.1.0 badge](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.1.0-%23E05735)](https://github.com/fugerit-org/graalkus/blob/master/CHANGELOG.md)
 [![license](https://img.shields.io/badge/License-MIT%20License-teal.svg)](https://opensource.org/license/mit)
 [![code of conduct](https://img.shields.io/badge/conduct-Contributor%20Covenant-purple.svg)](https://github.com/fugerit-org/fj-universe/blob/main/CODE_OF_CONDUCT.md)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fugerit-org_graalkus&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fugerit-org_graalkus)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=fugerit-org_graalkus&metric=coverage)](https://sonarcloud.io/summary/new_code?id=fugerit-org_graalkus)
 [![Docker images](https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker)](https://hub.docker.com/repository/docker/fugeritorg/graalkus/general)
-
 
 [![Java runtime version](https://img.shields.io/badge/run%20on-java%2021+-%23113366.svg?style=for-the-badge&logo=openjdk&logoColor=white)](https://universe.fugerit.org/src/docs/versions/java21.html)
 [![Java build version](https://img.shields.io/badge/build%20on-GraalVM%2021+-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)](https://universe.fugerit.org/src/docs/versions/gvm21.html)
