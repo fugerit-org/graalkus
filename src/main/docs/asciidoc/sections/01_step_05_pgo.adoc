@@ -101,3 +101,5 @@ image::01_step_04_aot_optimized_plot.png["Optimized AOT Benchmark plotting"]
 Let's compare the result with the xref:#step-04-benchmark-exec-sample-output[Unoptimized benchmark] (they have been run on the same system).
 
 After optimization, CPU and memory footprint is more or less the same, but request rate is about 20% higher (160.94 req/s from to 197.93 req/s).
+
+NOTE: More optimization options are available. A good resource for it is the link:https://github.com/alina-yur/native-spring-boot[Build and test various capabilities of Spring Boot & GraalVM] repository. (Even though focused on Spring Boot, most concept and options can be used on other frameworks too).
