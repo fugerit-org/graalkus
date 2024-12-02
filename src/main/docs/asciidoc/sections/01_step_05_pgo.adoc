@@ -1,0 +1,46 @@
+[#step-05-pgo]
+=== Benchmark application
+
+Native executables with GraalVM can perform better if they are optimized with some real data.
+
+In this section we will explore the GraaVM's link:https://www.graalvm.org/22.0/reference-manual/native-image/PGO/[Profile-Guided Optimizations] feature.
+
+==== Instrumentation
+
+1. We add an instrumented profile to our project :
+
+[source,xml]
+----
+<profile>
+  <id>instrumented</id>
+  <build>
+    <finalName>${project.artifactId}-${project.version}-instrumented</finalName>
+  </build>
+  <properties>
+    <quarkus.native.additional-build-args>${base-native-build-args},--pgo-instrument</quarkus.native.additional-build-args>
+  </properties>
+</profile>
+----
+
+2. Then we will create the native image :
+
+[source,shell]
+----
+mvn install -Dnative -Pinstrumented
+----
+
+3. Start the application :
+
+[source,shell]
+----
+./target/graalkus-1.0.0-SNAPSHOT-instrumented-runner
+----
+
+4. Provide some relevant workload :
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh
+----
+
+After the application shutdown a _.iprof_ file will be available in the working folder.

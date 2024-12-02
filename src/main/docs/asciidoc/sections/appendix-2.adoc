@@ -3,7 +3,14 @@
 
 In this appendix there are some references to some useful documentation and resources.
 
-* link:https://quarkus.io/guides/[Quarkus documentation], especially ;
-    ** link:https://quarkus.io/guides/writing-native-applications-tips[Tips for writing native applications]
-    ** link:https://quarkus.io/guides/building-native-image[Building a Native Executable]
-* link:https://venusdocs.fugerit.org/guide/[Venus Documentation]
+. Quarkus
+** link:https://quarkus.io/guides/[Quarkus documentation], especially ;
+*** link:https://quarkus.io/guides/writing-native-applications-tips[Tips for writing native applications]
+*** link:https://quarkus.io/guides/building-native-image[Building a Native Executable]
+. Fugerit Venus Doc
+** link:https://venusdocs.fugerit.org/guide/[Venus Documentation]
+. GraalVM
+** link:https://www.graalvm.org/latest/docs/[GraalVM documentation]
+*** link:https://www.graalvm.org/22.0/reference-manual/native-image/PGO/[Profile-Guided Optimizations
+]
+** link:https://github.com/alina-yur/native-spring-boot[Build and test various capabilities of Spring Boot & GraalVM]

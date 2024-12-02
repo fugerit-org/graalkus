@@ -17,6 +17,8 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <fj-doc-version>8.11.4</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+    <base-native-build-args>-H:IncludeResources=graalkus/fm-doc-process-config.xml,-H:IncludeResources=graalkus/template/document.ftl</base-native-build-args>
+    <quarkus.native.additional-build-args>${base-native-build-args}</quarkus.native.additional-build-args>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -195,6 +197,15 @@
     </plugins>
   </build>
   <profiles>
+    <profile>
+      <id>instrumented</id>
+      <build>
+        <finalName>${project.artifactId}-${project.version}-instrumented</finalName>
+      </build>
+      <properties>
+        <quarkus.native.additional-build-args>${base-native-build-args},--pgo-instrument</quarkus.native.additional-build-args>
+      </properties>
+    </profile>
     <profile>
       <id>jit</id>
       <activation>

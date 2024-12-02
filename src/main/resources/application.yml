@@ -1,8 +1,2 @@
 greeting:
   message: "hello"
-
-quarkus:
-  native:
-    # if needed add -H:+UnlockExperimentalVMOptions
-    additional-build-args: -H:IncludeResources=graalkus/fm-doc-process-config.xml,\
-      -H:IncludeResources=graalkus/template/document.ftl
