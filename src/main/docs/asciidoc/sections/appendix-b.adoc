@@ -7,6 +7,7 @@ In this appendix there are some references to some useful documentation and reso
 ** link:https://quarkus.io/guides/[Quarkus documentation], especially ;
 *** link:https://quarkus.io/guides/writing-native-applications-tips[Tips for writing native applications]
 *** link:https://quarkus.io/guides/building-native-image[Building a Native Executable]
+** link:https://github.com/amusarra/eventbus-logging-filter-jaxrs-docs[Quarkus Event Bus Logging Filter JAX-RS Documentation] (a very good example of both Quarkus Event Bus usage and doc-as-code approach).
 . Fugerit Venus Doc
 ** link:https://venusdocs.fugerit.org/guide/[Venus Documentation]
 ** link:https://github.com/fugerit-org/fj-doc-quarkus-tutorial[Venus Quarkus Tutorial App]
