@@ -19,7 +19,7 @@ jobs:
       - uses: fugerit-org/psychic-actions/maven-container-publish@mcp
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          docker-file: './src/main/docker/Dockerfile.corretto-jvm'
+          docker-file: './src/main/docker/Dockerfile.jvm'
           docker-platforms: linux/amd64,linux/arm64
           docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }},${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest
           dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
