@@ -18,6 +18,8 @@ include::sections/01_step_02_going_aot.adoc[]
 
 include::sections/01_step_03_containers.adoc[]
 
+include::sections/01_step_04_benchmark-exec.adoc[]
+
 include::sections/appendix-1.adoc[]
 
 include::sections/appendix-2.adoc[]

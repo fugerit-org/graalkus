@@ -1,0 +1,112 @@
+[#step-04-benchmark-exec]
+=== Benchmark application
+
+In this step we are going to benchmark the application, both in JIT and AOT version.
+
+==== Requirements
+
+For this benchmark we will use a script that can be found in the folder link:https://github.com/fugerit-org/graalkus/blob/develop/src/main/script/bench-graph-h2-load.sh[bench-graph-h2-load.sh], it is possible to find it in the following path of the repository _src/main/script/bench-graph-h2-load.sh_.
+
+The script needs :
+
+* link:https://nghttp2.org/documentation/package_README.html[h2load], for actual benchmark
+* link:https://github.com/astrofrog/psrecord[psrecord], to plot resources usage
+
+==== Benchmark JIT application
+
+Build the application
+
+[source,shell]
+----
+mvn package
+----
+
+Run the script (will also launch the application)
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh -m JIT
+----
+
+==== Benchmark AOT application
+
+Build the application
+
+[source,shell]
+----
+mvn install -Dnative
+----
+
+Run the script (will also launch the application)
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh -m AOT
+----
+
+==== Sample output
+
+Here I will show, as an example, the result on my system.
+
+* OS : Ubuntu 24.04.1 LTS
+* CPU : AMD Ryzen 7 3700X (8 core, 16 thread)
+* Memory : 32 GB
+
+With standard script parameters (h2load) :
+
+* 1000 requests for warm up run (w)
+* 50000 requests for benchmark run (r)
+* 60 clients (c)
+* 4 threads (t)
+
+JIT result :
+
+[source,txt]
+----
+finished in 307.21s, 162.75 req/s, 206.82KB/s
+requests: 50000 total, 50000 started, 50000 done, 50000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 50000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 62.05MB (65062220) total, 151.93KB (155580) headers (space savings 95.19%), 60.80MB (63755200) data
+                     min         max         mean         sd        +/- sd
+time for request:     7.02ms    740.79ms    367.49ms     62.39ms    70.54%
+time for connect:      103us      1.11ms       487us       253us    63.33%
+time to 1st byte:    80.95ms    520.16ms    342.72ms     77.10ms    73.33%
+req/s           :       2.71        2.75        2.72        0.01    78.33%
+----
+
+AOT result :
+
+[source,txt]
+----
+finished in 310.68s, 160.94 req/s, 204.51KB/s
+requests: 50000 total, 50000 started, 50000 done, 50000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 50000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 62.05MB (65062220) total, 151.93KB (155580) headers (space savings 95.19%), 60.80MB (63755200) data
+                     min         max         mean         sd        +/- sd
+time for request:     5.73ms       1.09s    372.03ms     68.59ms    81.46%
+time for connect:      116us       877us       437us       205us    60.00%
+time to 1st byte:   227.56ms    412.42ms    330.11ms     43.78ms    73.33%
+req/s           :       2.68        2.70        2.69        0.01    75.00%
+----
+
+And the relative resource plotting :
+
+[.float-group]
+--
+[.left]
+.JIT Benchmark plotting
+image::01_step_04_jit_plot.png["JIT Benchmark plotting"]
+
+[.left]
+.AOT Benchmark plotting
+image::01_step_04_aot_plot.png["AOT Benchmark plotting"]
+--
+
+As you can see :
+
+* The rate is more or less the same for JIT and AOT version
+* All request are successful in both scenarios
+* CPU footprint is also comparable (Except at startup where AOT performs better)
+* AOT memory footprint is 3x times lower than JIT version
+
+NOTE: Keep in mind we did not add any optimization to JIT version (for instance link:https://wiki.openjdk.org/display/crac[CRaC]), nor to AOT one (i.e. link:https://www.graalvm.org/22.0/reference-manual/native-image/PGO/[PGO]).
