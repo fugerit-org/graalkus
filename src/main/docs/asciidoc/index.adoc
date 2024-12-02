@@ -2,7 +2,7 @@
 
 NOTE: This project has been build with a doc-as-code approach from the repository : link:https://github.com/fugerit-org/graalkus[https://github.com/fugerit-org/graalkus].
 
-NOTE: The cover image has been generated with the help of DALL·E
+NOTE: The cover image of the PDF version has been generated with the help of DALL·E
 
 <<<
 
