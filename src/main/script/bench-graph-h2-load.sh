@@ -37,6 +37,7 @@ main() {
   export NUMBER_OF_REQUESTS=${NUMBER_OF_REQUESTS:-50000}
   export NUMBER_OF_CLIENTS=${NUMBER_OF_CLIENTS:-60}
   export NUMBER_OF_THREADS=${NUMBER_OF_THREADS:-4}
+  export NUMBER_OF_THREADS=${NUMBER_OF_THREADS:-4}
   export BASE_DIR=target
   export WARMUP_REQUESTS=${WARMUP_REQUESTS:-1000}
   export URL_PARAM="${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.adoc ${URL_BASE}/doc/example.adoc"
@@ -75,10 +76,14 @@ main() {
 
   if [ "${NO_START}" != "1" ]; then
     if [[ "${TYPE}" = "JIT" ]]; then
-      java -Xmx1024m -jar ./${BASE_DIR}/quarkus-app/quarkus-run.jar &
+      EXEC=${APPLICATION:-quarkus-app/quarkus-run.jar}
+      echo "Starting JIT application : ${EXEC}"
+      java -Xmx1024m -jar ./${BASE_DIR}/${EXEC} &
     else
       if [[ "${TYPE}" = "AOT" ]]; then
-        ./${BASE_DIR}/graalkus*runner &
+        EXEC=${APPLICATION:-graalkus*runner}
+        echo "Starting AOT application : ${EXEC}"
+        ./${BASE_DIR}/${EXEC} &
       fi
     fi
     export PID=$!
@@ -162,6 +167,11 @@ while [[ "$#" -gt 0 ]]; do
 		;;
 	-m | --mode)
 		TYPE="$2"
+		shift # past argument
+    shift # past value
+		;;
+	-a | --application)
+		APPLICATION="$2"
 		shift # past argument
     shift # past value
 		;;

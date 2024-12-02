@@ -207,6 +207,15 @@
       </properties>
     </profile>
     <profile>
+      <id>optimized</id>
+      <build>
+        <finalName>${project.artifactId}-${project.version}-optimized</finalName>
+      </build>
+      <properties>
+        <quarkus.native.additional-build-args>${base-native-build-args},--pgo=${project.basedir}/default.iprof</quarkus.native.additional-build-args>
+      </properties>
+    </profile>
+    <profile>
       <id>jit</id>
       <activation>
         <property>
@@ -424,6 +433,7 @@
                     <imagesdir>resources/images</imagesdir>
                     <toc>left</toc>
                     <icons>font</icons>
+                    <sectnums/>
                     <sectanchors>true</sectanchors>
                     <!-- set the idprefix to blank -->
                     <idprefix/>

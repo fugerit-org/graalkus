@@ -1,0 +1,37 @@
+[#step-06-conclusion]
+=== Conclusion
+
+So in this first part we :
+
+. Developed the stand alone JIT application
+. Converted it to an AOT application
+. Created the container image version of each
+. Run benchmarks on standalone application
+. Done native image optimization (PGO)
+
+Here is a summary of the result :
+
+[cols="4*", options="header"]
+|====================================================================================================================================================================================
+
+| Info
+| JIT
+| AOT
+| Optimized AOT
+
+| Startup time
+| 0.634s
+| 0.018s
+| 0.014s
+
+| Requests/s
+| 162.75
+| 160.94
+| 197.93
+
+| Memory (MB)
+| 400
+| 110
+| 100
+
+|====================================================================================================================================================================================

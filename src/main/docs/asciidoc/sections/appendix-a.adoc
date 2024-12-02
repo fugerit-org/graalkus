@@ -1,5 +1,5 @@
 [#appendix-1]
-== Appendix 1 : Going AOT in depth
+== Appendix A : Going AOT in depth
 
 In xref:01_step_02_going_aot.adoc[Going AOT section] we just adapted our software with a few modifications.
 

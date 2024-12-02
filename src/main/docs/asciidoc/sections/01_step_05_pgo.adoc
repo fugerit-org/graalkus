@@ -1,5 +1,5 @@
 [#step-05-pgo]
-=== Benchmark application
+=== Profile-Guided Optimizations
 
 Native executables with GraalVM can perform better if they are optimized with some real data.
 
@@ -44,3 +44,60 @@ mvn install -Dnative -Pinstrumented
 ----
 
 After the application shutdown a _.iprof_ file will be available in the working folder.
+
+==== Optimization
+
+1. Add another profile to build the optimized native image :
+
+[source,xml]
+----
+<profile>
+  <id>optimized</id>
+  <build>
+    <finalName>${project.artifactId}-${project.version}-optimized</finalName>
+  </build>
+  <properties>
+    <quarkus.native.additional-build-args>${base-native-build-args},--pgo=${project.basedir}/default.iprof</quarkus.native.additional-build-args>
+  </properties>
+</profile>
+----
+
+2. Create the optimized native executable :
+
+[source,shell]
+----
+mvn install -Dnative -Poptimized
+----
+
+3. Run the benchmark :
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh -m AOT -a graalkus-1.0.0-SNAPSHOT-optimized-runner
+----
+
+4. Sample optimized result
+
+This section contains the result of an optimized benchmark run :
+
+[source,txt]
+----
+finished in 252.61s, 197.93 req/s, 251.52KB/s
+requests: 50000 total, 50000 started, 50000 done, 50000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 50000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 62.05MB (65062220) total, 151.93KB (155580) headers (space savings 95.19%), 60.80MB (63755200) data
+                     min         max         mean         sd        +/- sd
+time for request:     3.84ms       1.11s    302.18ms     96.87ms    82.82%
+time for connect:      118us      1.24ms       516us       281us    63.33%
+time to 1st byte:   224.89ms    469.48ms    315.43ms     60.12ms    73.33%
+req/s           :       3.30        3.34        3.31        0.01    66.67%
+----
+
+And the relative resource plotting :
+
+.Optimized AOT Benchmark plotting
+image::01_step_04_aot_optimized_plot.png["Optimized AOT Benchmark plotting"]
+
+Let's compare the result with the xref:#step-04-benchmark-exec-sample-output[Unoptimized benchmark] (they have been run on the same system).
+
+After optimization, CPU and memory footprint is more or less the same, but request rate is about 20% higher (160.94 req/s from to 197.93 req/s).

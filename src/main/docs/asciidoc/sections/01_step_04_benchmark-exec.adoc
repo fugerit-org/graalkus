@@ -44,6 +44,7 @@ Run the script (will also launch the application)
 ./src/main/script/bench-graph-h2-load.sh -m AOT
 ----
 
+[#step-04-benchmark-exec-sample-output]
 ==== Sample output
 
 Here I will show, as an example, the result on my system.

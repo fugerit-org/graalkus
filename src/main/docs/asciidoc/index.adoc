@@ -20,6 +20,10 @@ include::sections/01_step_03_containers.adoc[]
 
 include::sections/01_step_04_benchmark-exec.adoc[]
 
-include::sections/appendix-1.adoc[]
+include::sections/01_step_05_pgo.adoc[]
 
-include::sections/appendix-2.adoc[]
+include::sections/01_step_06_conclusion.adoc[]
+
+include::sections/appendix-a.adoc[]
+
+include::sections/appendix-b.adoc[]
