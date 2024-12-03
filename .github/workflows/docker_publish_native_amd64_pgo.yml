@@ -42,14 +42,16 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Install h2load
         run: sudo apt-get install nghttp2-client
+      - name: Install gcc
+        run: sudo apt-get install -f build-essential libz-dev zlib1g-dev
       - name: Check h2load
         run: h2load --version
       - name: Build instrumented
-        run: 'mvn clean package -Dnative -Dquarkus.native.container-build=true -Pinstrumented'
+        run: 'mvn clean package -Dnative -Pinstrumented'
       - name: Run workload
         run: ./src/main/script/bench-graph-h2-load.sh -m AOT
       - name: Build optimzed
-        run: 'mvn clean package -Dnative -Dquarkus.native.container-build=true -Poptimized'
+        run: 'mvn clean package -Dnative -Poptimized'
         # using action https://github.com/marketplace/actions/build-and-push-docker-images
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
