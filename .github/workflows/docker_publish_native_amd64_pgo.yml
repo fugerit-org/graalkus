@@ -46,6 +46,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # SonarCloud access token should be generated from https://sonarcloud.io/account/security/
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Install h2load
+        run: sudo apt-get install nghttp2-client
+      - name: Checl h2load
+        run: h2load --version
       - name: Build instrumented
         run: mvn package -Dnative -Pinstrumented
       - name: Run workload
