@@ -1,5 +1,7 @@
 package org.fugerit.java.demo.graalkus;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -20,21 +22,22 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
 @Slf4j
 @Path("/doc")
+@ApplicationScoped
 public class DocResource {
+
+    @Inject
+    DocHelper docHelper;
 
     byte[] processDocument(String handlerId) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             // creates the doc helper
-            DocHelper docHelper = new DocHelper();
             // create custom data for the fremarker template 'document.ftl'
             List<People> listPeople = Arrays.asList(new People("Luthien", "Tinuviel", "Queen"), new People("Thorin", "Oakshield", "King"));
-            
-            
-            
             String chainId = "document";
             // output generation
             docHelper.getDocProcessConfig().fullProcess(chainId, DocProcessContext.newContext("listPeople", listPeople), handlerId, baos);
             // return the output
+            log.info( "processDocument handlerId:{}", handlerId );
             return baos.toByteArray();
         } catch (Exception e) {
             String message = String.format("Error processing %s, error:%s", handlerId, e);
