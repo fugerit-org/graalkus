@@ -8,7 +8,6 @@
 :lang: en
 :toc: left
 :hardbreaks-option:
-:sectnums:
 :sectnumlevels: 3
 :!figure-caption:
 :!chapter-signifier:

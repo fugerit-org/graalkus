@@ -433,7 +433,6 @@
                     <imagesdir>resources/images</imagesdir>
                     <toc>left</toc>
                     <icons>font</icons>
-                    <sectnums/>
                     <sectanchors>true</sectanchors>
                     <!-- set the idprefix to blank -->
                     <idprefix/>

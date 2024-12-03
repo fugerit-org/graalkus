@@ -1,5 +1,5 @@
 [#part-1-project-development]
-== Project Development
+== Part I - Development
 
 In this section we will describe how to develop our demo application :
 
