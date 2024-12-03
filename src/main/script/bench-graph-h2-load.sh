@@ -34,12 +34,11 @@ main() {
   fi
 
   export URL_BASE=${URL_BASE:-http://localhost:8080}
-  export NUMBER_OF_REQUESTS=${NUMBER_OF_REQUESTS:-50000}
-  export NUMBER_OF_CLIENTS=${NUMBER_OF_CLIENTS:-60}
-  export NUMBER_OF_THREADS=${NUMBER_OF_THREADS:-4}
-  export NUMBER_OF_THREADS=${NUMBER_OF_THREADS:-4}
+  export NUMBER_OF_REQUESTS=${NUMBER_OF_REQUESTS:-250000}
+  export NUMBER_OF_CLIENTS=${NUMBER_OF_CLIENTS:-12}
+  export NUMBER_OF_THREADS=${NUMBER_OF_THREADS:-1}
   export BASE_DIR=target
-  export WARMUP_REQUESTS=${WARMUP_REQUESTS:-1000}
+  export WARMUP_REQUESTS=${WARMUP_REQUESTS:-50000}
   export URL_PARAM="${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.adoc ${URL_BASE}/doc/example.adoc"
 
   export OUTPUT_BASE=$(date +%Y%m%d%H%M%S)_${TYPE:-GEN}
@@ -104,7 +103,7 @@ main() {
   h2load -n${NUMBER_OF_REQUESTS} -c${NUMBER_OF_CLIENTS} -t${NUMBER_OF_THREADS} --warm-up-time=2 ${URL_PARAM} > ${BASE_DIR}/out_${OUTPUT_BASE}.log 2>&1
 
 
-  print "JVM run done!🎉"
+  print "${TYPE} run done!🎉"
 
   if [ "${NO_START}" != "1" ]; then
     print "Killing process ${PID}"
