@@ -25,6 +25,6 @@ jobs:
           maven-options: 'clean package -Dnative -Dquarkus.native.container-build=true'
           docker-file: './src/main/docker/Dockerfile.native-micro'
           docker-platforms: linux/amd64
-          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-amd64native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native
+          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}-amd64native:${{ github.ref_name }}-amd64native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native
           dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}

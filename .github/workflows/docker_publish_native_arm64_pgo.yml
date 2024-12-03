@@ -1,6 +1,6 @@
 # CI with maven build and scan
 
-name: CI docker build native amd64 PGO
+name: CI docker build native arm64 PGO
 
 on:
   # Trigger analysis when pushing in master or pull requests, and when creating
@@ -13,7 +13,8 @@ on:
 
 jobs:
   docker:
-    runs-on: ubuntu-latest
+    name: Build
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@main
         with:
@@ -42,8 +43,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Install h2load
         run: sudo apt-get install nghttp2-client
-      - name: Install gcc
-        run: sudo apt-get install -f build-essential libz-dev zlib1g-dev
       - name: Check h2load
         run: h2load --version
       - name: Build instrumented
@@ -69,4 +68,4 @@ jobs:
           file: ./src/main/docker/Dockerfile.native-debian
           platforms: linux/amd64
           push: true
-          tags: fugeritorg/${{github.event.repository.name}}:${{ github.ref_name }}-amd64native-pgo,fugeritorg/${{github.event.repository.name}}:latest-amd64native-pgo
+          tags: fugeritorg/${{github.event.repository.name}}:${{ github.ref_name }}-arm64native-pgo,fugeritorg/${{github.event.repository.name}}:latest-arm64native-pgo
