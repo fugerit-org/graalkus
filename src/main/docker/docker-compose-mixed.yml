@@ -1,0 +1,40 @@
+# docker compose -f src/main/docker/docker-compose-mixed.yml up -d
+
+networks:
+  graalkus_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.80.0.0/16
+
+# Define the services
+services:
+
+  api-gateway-mixed:
+    image: graalkus-api:mixed
+    container_name: graalkus-api-mixed
+    build:
+      dockerfile: ./Dockerfile
+      context: ./src/main/docker/nginx-mixed/
+    networks:
+      - graalkus_network
+    ports:
+      - "8088:80"
+
+  graalkus-jit-mixed:
+    image: fugeritorg/graalkus:latest
+    container_name: graalkus-jit-mixed
+    restart: always
+    networks:
+      - graalkus_network
+    ports:
+      - "8081:8080"
+
+  graalkus-aot-mixed:
+    image: fugeritorg/graalkus:latest-amd64native-pgo
+    container_name: graalkus-aot-mixed
+    restart: always
+    networks:
+      - graalkus_network
+    ports:
+      - "8082:8080"
