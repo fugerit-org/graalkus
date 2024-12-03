@@ -51,13 +51,11 @@ jobs:
       - name: Checl h2load
         run: h2load --version
       - name: Build instrumented
-        run: mvn package -Dnative -Pinstrumented
+        run: 'mvn clean package -Dnative -Dquarkus.native.container-build=true -Pinstrumented'
       - name: Run workload
         run: ./src/main/script/bench-graph-h2-load.sh -m AOT
       - name: Build optimzed
-        run: mvn package -Dnative -Poptimized
-      - name: Remove instrumented
-        run: rm -fv target/*instrumented*runner
+        run: 'mvn clean package -Dnative -Dquarkus.native.container-build=true -Poptimized'
         # using action https://github.com/marketplace/actions/build-and-push-docker-images
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
