@@ -8,13 +8,14 @@ on:
   push:
     branches:
       - develop
+      - arm64
   release:
     types: [published]
 
 jobs:
   docker:
     name: Build
-    runs-on: self-hosted
+    runs-on: ARM64
     steps:
       - uses: actions/checkout@main
         with:
@@ -46,9 +47,9 @@ jobs:
       - name: Check h2load
         run: h2load --version
       - name: Build instrumented
-        run: 'mvn clean package -Dnative -Pinstrumented'
+        run: 'mvn clean package -Dnative -Pinstrumented -Dquarkus.http.port=8999'
       - name: Run workload
-        run: ./src/main/script/bench-graph-h2-load.sh -m AOT
+        run: './src/main/script/bench-graph-h2-load.sh -m AOT -u http://localhost:8999'
       - name: Build optimzed
         run: 'mvn clean package -Dnative -Poptimized'
         # using action https://github.com/marketplace/actions/build-and-push-docker-images
@@ -66,6 +67,6 @@ jobs:
         with:
           context: .
           file: ./src/main/docker/Dockerfile.native-debian
-          platforms: linux/amd64
+          platforms: linux/arm64
           push: true
           tags: fugeritorg/${{github.event.repository.name}}:${{ github.ref_name }}-arm64native-pgo,fugeritorg/${{github.event.repository.name}}:latest-arm64native-pgo

@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - develop
+      - amd64
   release:
     types: [published]
 
@@ -49,7 +50,7 @@ jobs:
       - name: Build instrumented
         run: 'mvn clean package -Dnative -Pinstrumented'
       - name: Run workload
-        run: ./src/main/script/bench-graph-h2-load.sh -m AOT
+        run: './src/main/script/bench-graph-h2-load.sh -m AOT'
       - name: Build optimzed
         run: 'mvn clean package -Dnative -Poptimized'
         # using action https://github.com/marketplace/actions/build-and-push-docker-images
