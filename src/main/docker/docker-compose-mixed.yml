@@ -11,15 +11,15 @@ networks:
 services:
 
   api-gateway-mixed:
-    image: graalkus-api:mixed
+    image: nginx:latest
     container_name: graalkus-api-mixed
-    build:
-      dockerfile: ./Dockerfile
-      context: ./src/main/docker/nginx-mixed/
+    volumes:
+      - ${PWD}/src/main/docker/nginx-mixed/nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
       - graalkus_network
     ports:
       - "8088:80"
+
 
   graalkus-jit-mixed:
     image: fugeritorg/graalkus:latest
@@ -29,6 +29,14 @@ services:
       - graalkus_network
     ports:
       - "8081:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 128M
+        reservations:
+          cpus: 1.0
+          memory: 64M
 
   graalkus-aot-mixed:
     image: fugeritorg/graalkus:latest-amd64native-pgo
@@ -38,3 +46,11 @@ services:
       - graalkus_network
     ports:
       - "8082:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 128M
+        reservations:
+          cpus: 1.0
+          memory: 64M
