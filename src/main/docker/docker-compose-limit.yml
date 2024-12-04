@@ -1,4 +1,4 @@
-# docker compose -f src/main/docker/docker-compose.yml up -d
+# docker compose -f src/main/docker/docker-compose-limit.yml up -d
 
 # Define the services
 services:
@@ -12,10 +12,10 @@ services:
       resources:
         limits:
           cpus: 1.0
-          memory: 512M
+          memory: 128M
         reservations:
           cpus: 1.0
-          memory: 256M
+          memory: 64M
   graalkus-aot-limit:
     image: fugeritorg/graalkus:latest-amd64native
     container_name: graalkus-aot-limit
@@ -26,10 +26,10 @@ services:
       resources:
         limits:
           cpus: 1.0
-          memory: 256M
+          memory: 128M
         reservations:
           cpus: 1.0
-          memory: 128M
+          memory: 64M
   graalkus-aot-optimized-limit:
     image: fugeritorg/graalkus:latest-amd64native-pgo
     container_name: graalkus-aot-optimized-limit
@@ -40,7 +40,21 @@ services:
       resources:
         limits:
           cpus: 1.0
+          memory: 128M
+        reservations:
+          cpus: 1.0
+          memory: 64M
+  graalkus-jit-limit-high:
+    image: fugeritorg/graalkus:latest
+    container_name: graalkus-jit-high-limit
+    restart: always
+    ports:
+      - "8087:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
           memory: 256M
         reservations:
           cpus: 1.0
-          memory: 128M
+          memory: 64M

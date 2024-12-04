@@ -1,0 +1,156 @@
+[#step-04-ci-limit]
+=== Benchmark with limits
+
+Let's configure a docker compose to limit resources for our containers :
+
+[source,yaml]
+----
+services:
+  graalkus-jit-limit:
+    image: fugeritorg/graalkus:latest
+    container_name: graalkus-jit-limit
+    restart: always
+    ports:
+      - "8084:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 256M
+        reservations:
+          cpus: 1.0
+          memory: 64M
+  graalkus-aot-limit:
+    image: fugeritorg/graalkus:latest-amd64native
+    container_name: graalkus-aot-limit
+    restart: always
+    ports:
+      - "8085:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 128M
+        reservations:
+          cpus: 1.0
+          memory: 64M
+  graalkus-aot-optimized-limit:
+    image: fugeritorg/graalkus:latest-amd64native-pgo
+    container_name: graalkus-aot-optimized-limit
+    restart: always
+    ports:
+      - "8086:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 128M
+        reservations:
+          cpus: 1.0
+          memory: 64M
+  graalkus-jit-limit-high:
+    image: fugeritorg/graalkus:latest
+    container_name: graalkus-jit-high-limit
+    restart: always
+    ports:
+      - "8087:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 256M
+        reservations:
+          cpus: 1.0
+          memory: 64M
+----
+
+and start it the containers :
+
+[source,shell]
+----
+docker compose -f src/main/docker/docker-compose-limit.yml up -d
+----
+
+For this compose configuration the link:https://hub.docker.com/repository/docker/fugeritorg/graalkus/general[pre-built container images].
+
+Then benchmark one by one the services :
+
+1. JIT Version (1.0 CPU, max 64/128 MB)
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh -u http://localhost:8084
+----
+
+[source,txt]
+----
+finished in 172.83s, 1446.51 req/s, 1.79MB/s
+requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
+                     min         max         mean         sd        +/- sd
+time for request:      147us    590.09ms      8.25ms     24.06ms    91.73%
+time for connect:      114us       592us       330us       146us    66.67%
+time to 1st byte:    15.10ms     16.43ms     15.69ms       500us    66.67%
+req/s           :     120.55      121.13      120.78        0.21    58.33%
+----
+
+2. AOT Version (1.0 CPU, max 64/128 MB)
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh -u http://localhost:8085
+----
+
+[source,txt]
+----
+finished in 311.73s, 801.98 req/s, 1015.69KB/s
+requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
+                     min         max         mean         sd        +/- sd
+time for request:      304us    104.70ms     14.92ms     31.52ms    85.05%
+time for connect:      115us       584us       333us       143us    66.67%
+time to 1st byte:     2.17ms      4.38ms      3.12ms       885us    66.67%
+req/s           :      66.83       66.95       66.90        0.04    75.00%
+----
+
+3. AOT Optimized Version (1.0 CPU, max 64/128 MB)
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh -u http://localhost:8086
+----
+
+[source,txt]
+----
+finished in 132.81s, 1882.39 req/s, 2.33MB/s
+requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
+                     min         max         mean         sd        +/- sd
+time for request:      179us     97.61ms      6.33ms     20.95ms    93.63%
+time for connect:      185us      1.07ms       609us       278us    66.67%
+time to 1st byte:     1.43ms      2.80ms      2.09ms       465us    58.33%
+req/s           :     156.86      157.24      157.01        0.15    83.33%
+----
+
+4. JIT Version, High limits (1.0 CPU, max 64/256 MB)
+
+[source,shell]
+----
+./src/main/script/bench-graph-h2-load.sh -u http://localhost:8087
+----
+
+[source,txt]
+----
+finished in 156.90s, 1593.32 req/s, 1.97MB/s
+requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
+                     min         max         mean         sd        +/- sd
+time for request:      152us     94.86ms      7.48ms     22.68ms    92.48%
+time for connect:      130us       614us       350us       146us    66.67%
+time to 1st byte:     7.48ms     83.63ms     14.15ms     21.88ms    91.67%
+req/s           :     132.78      133.47      133.06        0.23    75.00%
+----

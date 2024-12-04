@@ -26,6 +26,16 @@ include::sections/01_step_05_pgo.adoc[]
 
 include::sections/01_step_06_conclusion.adoc[]
 
+include::sections/02_ci_container.adoc[]
+
+include::sections/02_step_01_ci_jit.adoc[]
+
+include::sections/02_step_02_ci_aot.adoc[]
+
+include::sections/02_step_03_ci_aot_pgo.adoc[]
+
+include::sections/02_step_04_limit.adoc[]
+
 include::sections/appendix-a.adoc[]
 
 include::sections/appendix-b.adoc[]

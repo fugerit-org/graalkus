@@ -1,0 +1,8 @@
+[#part-2-ci-container]
+== Part II - CI and container images
+
+This section describes container images build thought CI :
+
+* link:https://github.com/fugerit-org/graalkus/blob/main/.github/workflows/docker_publish.yml[JIT Version]
+* link:https://github.com/fugerit-org/graalkus/blob/main/.github/workflows/docker_publish_native_amd64.yml[AOT Version]
+* link:https://github.com/fugerit-org/graalkus/blob/main/.github/workflows/docker_publish_native_amd64_pgo.yml[AOT PGO Version]

@@ -1,0 +1,15 @@
+[#step-03-ci-aot-pgo]
+=== AOT Optimized Container image
+
+[source,txt]
+----
+finished in 12.63s, 19792.74 req/s, 24.48MB/s
+requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
+status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
+traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
+                     min         max         mean         sd        +/- sd
+time for request:      183us      8.08ms       583us       354us    95.75%
+time for connect:      109us       558us       314us       137us    66.67%
+time to 1st byte:     1.17ms      1.73ms      1.38ms       152us    83.33%
+req/s           :    1649.48     1659.64     1653.12        2.69    83.33%
+----
