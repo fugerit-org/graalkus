@@ -41,6 +41,11 @@ main() {
   export WARMUP_REQUESTS=${WARMUP_REQUESTS:-50000}
   export URL_PARAM="${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.html ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.md ${URL_BASE}/doc/example.adoc ${URL_BASE}/doc/example.adoc"
 
+  if [[ "${PDF}" = "1" ]]; then
+    export URL_PARAM="${URL_PARAM} ${URL_BASE}/doc/example.pdf"
+    echo "added pdf url : ${URL_PARAM}"
+  fi
+
   export OUTPUT_BASE=$(date +%Y%m%d%H%M%S)_${TYPE:-GEN}
 
   # check if quarkus-run.jar exists
@@ -173,6 +178,10 @@ while [[ "$#" -gt 0 ]]; do
 		APPLICATION="$2"
 		shift # past argument
     shift # past value
+		;;
+	-p | --pdf)
+		PDF="1"
+		shift # past argument
 		;;
 	*)
 		POSITIONAL_ARGS+=("$1") # save positional arg
