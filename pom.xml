@@ -219,6 +219,7 @@
         <finalName>${project.artifactId}-${project.version}-optimized</finalName>
       </build>
       <properties>
+        <quarkus.package.jar.enabled>false</quarkus.package.jar.enabled>
         <quarkus.native.additional-build-args>${base-native-build-args},--pgo=${project.basedir}/default.iprof</quarkus.native.additional-build-args>
       </properties>
     </profile>
@@ -250,6 +251,7 @@
         </property>
       </activation>
       <properties>
+        <quarkus.package.jar.enabled>false</quarkus.package.jar.enabled>
         <skipITs>true</skipITs>
         <quarkus.native.enabled>true</quarkus.native.enabled>
       </properties>

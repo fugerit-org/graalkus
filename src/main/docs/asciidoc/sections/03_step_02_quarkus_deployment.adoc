@@ -18,3 +18,18 @@ mvn clean package -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graal
 ----
 
 NOTE: I specified the _openshift.name=graalkus-jit_ property as I want to be able to install two deployments from the same application.
+
+[source,shell]
+----
+quarkus build --native --no-tests      -Dquarkus.native.container-build=true   -Dquarkus.native.builder-image.pull=never       -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graalkus-aot
+----
+
+
+And after xref:01_step_05_pgo.adoc[PGO], the AOT optimized version :
+
+[source,shell]
+----
+mvn clean install -Dnative -Poptimized -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graalkus-aot-pgo
+----
+
+
