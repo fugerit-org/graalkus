@@ -1,2 +1,7 @@
 greeting:
+
   message: "hello"
+
+  openshift:
+    route:
+      expose: true

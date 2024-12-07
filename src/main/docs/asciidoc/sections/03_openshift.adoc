@@ -1,0 +1,6 @@
+[#part-3-openshift]
+== Part III OpenShift
+
+This section will configure and deploy Graalkus on a real platform. The platform of choice is link:https://developers.redhat.com/developer-sandbox[RedHat Developer Sandbox], which allows to use an Openshift environment free of costs for one month.
+
+

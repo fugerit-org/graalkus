@@ -1,0 +1,31 @@
+[#step-03-quarkus-configuration]
+=== Quarkus configuration
+
+There is a built-in Quarkus extension which make openshift deployment easy.
+
+Let's install the link:https://quarkus.io/guides/deploying-to-openshift[OpenShift] extension :
+
+[source,shell]
+----
+mvn quarkus:add-extension -Dextensions='quarkus-openshift
+----
+
+And configure the route exposure :
+
+[source,yaml]
+----
+quarkus:
+  openshift:
+    route:
+      expose: true
+----
+
+Alongside the link:https://quarkus.io/guides/smallrye-health[SmallRye Health] extension :
+
+[source,shell]
+----
+mvn quarkus:add-extension -Dextensions='smallrye-health'
+----
+
+NOTE: the _smallrye-health_ extension is needed to provide the
+
