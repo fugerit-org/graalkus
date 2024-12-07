@@ -1,0 +1,30 @@
+# CI with maven build and scan
+
+name: CI docker build native amd64
+
+on:
+  # Trigger analysis when pushing in master or pull requests, and when creating
+  # a pull request.
+  push:
+    branches:
+      - develop
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fugerit-org/psychic-actions/maven-container-publish@mcp
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          java-type: 'native'
+          java-distribution: 'graalvm'
+          java-version: '21'
+          maven-options: 'clean package -Dnative -Dquarkus.native.container-build=true'
+          docker-file: './src/main/docker/Dockerfile.native-micro'
+          docker-platforms: linux/amd64
+          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}-arm64native:${{ github.ref_name }}-amd64native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}

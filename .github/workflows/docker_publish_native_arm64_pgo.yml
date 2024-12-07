@@ -8,7 +8,6 @@ on:
   push:
     branches:
       - develop
-      - arm64
   release:
     types: [published]
 
