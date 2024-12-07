@@ -40,6 +40,8 @@ include::sections/03_openshift.adoc[]
 
 include::sections/03_step_01_quarkus_configuration.adoc[]
 
+include::sections/03_step_02_quarkus_deployment.adoc[]
+
 include::sections/appendix-a.adoc[]
 
 include::sections/appendix-b.adoc[]

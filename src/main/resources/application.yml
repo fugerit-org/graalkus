@@ -1,7 +1,4 @@
-greeting:
-
-  message: "hello"
-
+quarkus:
   openshift:
     route:
       expose: true

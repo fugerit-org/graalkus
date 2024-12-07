@@ -1,0 +1,20 @@
+[#step-02-quarkus-deployment]
+=== Quarkus deployment
+
+NOTE: From here on the link:https://access.redhat.com/downloads/content/290/ver=4.17/rhel---9/4.17.6/x86_64/product-software[OpenShift CLI] is required.
+
+After _oc_ installation, from the OpenShift Sandbox profile select "Copy Login Command" and login to openshift :
+
+[source,shell]
+----
+oc login --token=sha256****************** --server=https://api.sandbox-m4.g2pi.p1.openshiftapps.com:6443
+----
+
+At this point it is possible to deploy the JIT version of the application :
+
+[source,shell]
+----
+mvn clean package -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graalkus-jit
+----
+
+NOTE: I specified the _openshift.name=graalkus-jit_ property as I want to be able to install two deployments from the same application.

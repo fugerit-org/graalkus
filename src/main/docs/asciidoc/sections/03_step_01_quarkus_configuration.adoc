@@ -1,4 +1,4 @@
-[#step-03-quarkus-configuration]
+[#step-01-quarkus-configuration]
 === Quarkus configuration
 
 There is a built-in Quarkus extension which make openshift deployment easy.
