@@ -52,6 +52,6 @@ jobs:
       # - https://quarkus.io/guides/deploying-to-openshift
       # - https://quarkus.io/guides/container-image#quarkus-container-image-openshift_quarkus-openshift-build-strategy
       - name: Build project
-        run: mvn clean install -Dnative -Dquarkus.openshift.build-strategy=docker -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graalkus-aot
+        run: mvn clean package -Dnative -Pnative -Dquarkus.native.container-build=true -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graalkus-aot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
