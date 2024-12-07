@@ -1,0 +1,57 @@
+# CI to deploy native version on openshift
+
+name: CI deploy openshift AOT
+
+# note for this workflow two secrets are need to complete the OpenShift login :
+#
+# OPENSHIFT_TOKEN
+# OPENSHIFT_SERVER
+#
+# NOTE: if those parameters are not valid, build will fail.
+
+on:
+  push:
+    branches:
+      - deploy-ocp-aot
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Install oc cli
+        uses: redhat-actions/oc-installer@v1
+        with:
+          oc_version: 'latest'
+      - name: Check oc cli
+        run: oc version
+      - name: Openshift Login
+        run: 'oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}'
+
+      # checkout
+      - uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      # setup latest GraalVM LTS
+      - uses: actions/setup-java@main
+        with:
+          distribution: 'graalvm' # See 'Supported distributions' for available options
+          java-version: '21'
+
+      - name: Cache Maven packages
+        uses: actions/cache@main
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # deploy on openshift
+      # refer to
+      # - https://quarkus.io/guides/deploying-to-openshift
+      # - https://quarkus.io/guides/container-image#quarkus-container-image-openshift_quarkus-openshift-build-strategy
+      - name: Build project
+        run: mvn clean install -Dnative -Dquarkus.openshift.build-strategy=docker -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graalkus-aot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
