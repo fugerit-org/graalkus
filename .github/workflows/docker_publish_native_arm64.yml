@@ -1,6 +1,6 @@
 # CI with maven build and scan
 
-name: CI docker build native amd64
+name: CI docker build native arm64
 
 on:
   # Trigger analysis when pushing in master or pull requests, and when creating
