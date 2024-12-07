@@ -3,19 +3,28 @@
 # Define the services
 services:
   graalkus-jit:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
     image: fugeritorg/graalkus:latest
     container_name: graalkus-jit
     restart: always
     ports:
       - "8081:8080"
   graalkus-aot:
-    image: fugeritorg/graalkus:latest-amd64native
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:latest-native
     container_name: graalkus-aot
     restart: always
     ports:
       - "8082:8080"
   graalkus-aot-optimized:
-    image: fugeritorg/graalkus:latest-amd64native-pgo
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:latest-native-pgo
     container_name: graalkus-aot-optimized
     restart: always
     ports:

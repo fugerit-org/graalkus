@@ -3,6 +3,9 @@
 # Define the services
 services:
   graalkus-jit-limit:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
     image: fugeritorg/graalkus:latest
     container_name: graalkus-jit-limit
     restart: always
@@ -17,7 +20,10 @@ services:
           cpus: 1.0
           memory: 64M
   graalkus-aot-limit:
-    image: fugeritorg/graalkus:latest-amd64native
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:latest-native
     container_name: graalkus-aot-limit
     restart: always
     ports:
@@ -31,7 +37,10 @@ services:
           cpus: 1.0
           memory: 64M
   graalkus-aot-optimized-limit:
-    image: fugeritorg/graalkus:latest-amd64native-pgo
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:latest-native-pgo
     container_name: graalkus-aot-optimized-limit
     restart: always
     ports:

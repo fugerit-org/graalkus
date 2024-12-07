@@ -24,6 +24,9 @@ services:
 
 
   graalkus-jit-mixed:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
     image: fugeritorg/graalkus:latest
     container_name: graalkus-jit-mixed
     hostname: jit
@@ -36,7 +39,10 @@ services:
       - "8081:8080"
 
   graalkus-aot-mixed:
-    image: fugeritorg/graalkus:latest-amd64native-pgo
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:latest-native-pgo
     container_name: graalkus-aot-mixed
     hostname: aot
     labels:
@@ -46,4 +52,3 @@ services:
       - graalkus_network
     ports:
       - "8082:8080"
-
