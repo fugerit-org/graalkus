@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: graalkus-aot-pg-hpda
+  name: graalkus-aot-pgo-hpda
   namespace: fugerit-dev
 spec:
   scaleTargetRef:
@@ -9,11 +9,25 @@ spec:
     kind: Deployment
     name: graalkus-aot-pgo
   minReplicas: 1
-  maxReplicas: 3
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          averageUtilization: 50
-          type: Utilization
+  maxReplicas: 4
+  behavior:
+    scaleDown:
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Min
+      stabilizationWindowSeconds: 60
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 4
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0

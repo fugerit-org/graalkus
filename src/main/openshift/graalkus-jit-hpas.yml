@@ -8,12 +8,26 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: graalkus-jit
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 4
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          averageUtilization: 50
-          type: Utilization
+  behavior:
+    scaleDown:
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Min
+      stabilizationWindowSeconds: 60
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 4
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
