@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: graalkus-jit
+  labels:
+    mode: aot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graalkus-jit-app
+  template:
+    metadata:
+      labels:
+        app: graalkus-jit-app
+    spec:
+      containers:
+        - name: graalkus-jit
+          image: docker.io/fugeritorg/graalkus:latest
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+            requests:
+              memory: "64Mi"
+              cpu: "10m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: graalkus-jit-service
+spec:
+  ports:
+    - name: http-80
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: graalkus-jit-app
