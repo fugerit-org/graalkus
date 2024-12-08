@@ -101,11 +101,11 @@ main() {
     fi
   fi
 
-  print "Executing warmup load : ${WARMUP_REQUESTS}"
-  h2load -n${WARMUP_REQUESTS} -c${NUMBER_OF_CLIENTS} -t${NUMBER_OF_THREADS} --warm-up-time=2 ${URL_PARAM}
+  print "Executing warmup load : ${WARMUP_REQUESTS}, additional options : ${H2LOAD_OPTIONS}"
+  h2load ${H2LOAD_OPTIONS} -n${WARMUP_REQUESTS} -c${NUMBER_OF_CLIENTS} -t${NUMBER_OF_THREADS} --warm-up-time=2 ${URL_PARAM}
 
-  print "Executing benchmark load : ${NUMBER_OF_REQUESTS}"
-  h2load -n${NUMBER_OF_REQUESTS} -c${NUMBER_OF_CLIENTS} -t${NUMBER_OF_THREADS} --warm-up-time=2 ${URL_PARAM} > ${BASE_DIR}/out_${OUTPUT_BASE}.log 2>&1
+  print "Executing benchmark load : ${NUMBER_OF_REQUESTS}, additional options : ${H2LOAD_OPTIONS}"
+  h2load ${H2LOAD_OPTIONS} -n${NUMBER_OF_REQUESTS} -c${NUMBER_OF_CLIENTS} -t${NUMBER_OF_THREADS} --warm-up-time=2 ${URL_PARAM} > ${BASE_DIR}/out_${OUTPUT_BASE}.log 2>&1
 
 
   print "${TYPE} run done!🎉"
@@ -182,6 +182,11 @@ while [[ "$#" -gt 0 ]]; do
 	-p | --pdf)
 		PDF="1"
 		shift # past argument
+		;;
+	-o | --options)
+		H2LOAD_OPTIONS="$2"
+		shift # past argument
+    shift # past value
 		;;
 	*)
 		POSITIONAL_ARGS+=("$1") # save positional arg
