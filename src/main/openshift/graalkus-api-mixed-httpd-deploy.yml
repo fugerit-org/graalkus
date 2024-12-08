@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: graalkus-api-mixed-httpd
-          image: registry.redhat.io/rhel8/httpd-24
+          image: docker.io/fugeritorg/graalkus:api-mixed-httpd
           ports:
             - name: http
               containerPort: 8080
@@ -28,6 +28,18 @@ spec:
             requests:
               memory: "64Mi"
               cpu: "10m"
+          volumeMounts:
+            - mountPath: /etc/httpd/conf/rewrite-rules.conf
+              name: graalkus-api-mixed-httpd-volume
+              subPath: rewrite-rules.conf
+      volumes:
+        - name: graalkus-api-mixed-httpd-volume
+          configMap:
+            defaultMode: 420
+            items:
+              - key: rewrite-rules.conf
+                path: rewrite-rules.conf
+            name: graalkus-api-mixed-httpd-cm
 ---
 kind: Service
 apiVersion: v1
