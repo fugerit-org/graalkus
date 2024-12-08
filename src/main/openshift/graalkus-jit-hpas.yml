@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: graalkus-jit
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 3
   behavior:
     scaleDown:
       policies:
@@ -24,7 +24,7 @@ spec:
     scaleUp:
       policies:
         - type: Pods
-          value: 4
+          value: 3
           periodSeconds: 15
         - type: Percent
           value: 50
