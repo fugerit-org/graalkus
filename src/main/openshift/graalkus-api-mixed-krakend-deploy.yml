@@ -1,0 +1,55 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: graalkus-api-mixed-krakend
+  labels:
+    mode: aot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graalkus-api-mixed-krakend-app
+  template:
+    metadata:
+      labels:
+        app: graalkus-api-mixed-krakend-app
+    spec:
+      containers:
+        - name: graalkus-api-mixed-krakend
+          image: docker.io/devopsfaith/krakend
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+            requests:
+              memory: "64Mi"
+              cpu: "10m"
+          volumeMounts:
+            - mountPath: /etc/krakend/krakend.json
+              name: graalkus-api-mixed-krakend-volume
+              subPath: krakend.json
+      volumes:
+        - name: graalkus-api-mixed-krakend-volume
+          configMap:
+            defaultMode: 420
+            items:
+              - key: krakend.json
+                path: krakend.json
+            name: graalkus-api-mixed-krakend-cm
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: graalkus-api-mixed-krakend-service
+spec:
+  ports:
+    - name: http-80
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: graalkus-api-mixed-krakend-app
