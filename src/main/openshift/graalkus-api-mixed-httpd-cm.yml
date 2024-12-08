@@ -7,4 +7,5 @@ data:
   rewrite-rules.conf: |
     RewriteEngine  on
     LogLevel debug
+    RewriteRule "^doc/example.pdf" "http://graalkus-jit-service:80/doc/example.pdf" [P]
     RewriteRule "^doc/(.*)$" "http://graalkus-aot-pgo-service:80/doc/$1" [P]
