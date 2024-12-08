@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: graalkus-api-mixed-httpd
+  labels:
+    mode: aot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graalkus-api-mixed-httpd-app
+  template:
+    metadata:
+      labels:
+        app: graalkus-api-mixed-httpd-app
+    spec:
+      containers:
+        - name: graalkus-api-mixed-httpd
+          image: registry.redhat.io/rhel8/httpd-24
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "1000m"
+            requests:
+              memory: "64Mi"
+              cpu: "10m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: graalkus-api-mixed-httpd-service
+spec:
+  ports:
+    - name: http-80
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: graalkus-api-mixed-httpd-app
