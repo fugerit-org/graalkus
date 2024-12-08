@@ -1,0 +1,48 @@
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "name": "graalkus-api-mixed-krakend",
+  "port": 8080,
+  "endpoints": [
+    {
+      "endpoint": "/doc/example.md",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://graalkus-aot-mixed:8080"],
+          "url_pattern": "/doc/example.md"
+        }
+      ]
+    },
+    {
+      "endpoint": "/doc/example.adoc",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://graalkus-aot-mixed:8080"],
+          "url_pattern": "/doc/example.adoc"
+        }
+      ]
+    },
+    {
+      "endpoint": "/doc/example.html",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://graalkus-aot-mixed:8080"],
+          "url_pattern": "/doc/example.html"
+        }
+      ]
+    },
+    {
+      "endpoint": "/doc/example.pdf",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://graalkus-jit-mixed:8080"],
+          "url_pattern": "/doc/example.pdf"
+        }
+      ]
+    }
+  ]
+}

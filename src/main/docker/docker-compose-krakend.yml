@@ -1,0 +1,54 @@
+# docker compose -f src/main/docker/docker-compose-mixed.yml up -d
+
+networks:
+  graalkus_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.80.0.0/16
+
+# Define the services
+services:
+
+  api-gateway-mixed:
+    image: devopsfaith/krakend
+    container_name: graalkus-api-mixed
+    environment:
+      - KRAKEND_OPTIMIZATION=http2
+    volumes:
+      - ${PWD}/src/main/docker/krakend-mixed/:/etc/krakend/
+    networks:
+      - graalkus_network
+    ports:
+      - "8090:8090"
+      - "8080:8080"
+
+  graalkus-jit-mixed:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:latest
+    container_name: graalkus-jit-mixed
+    hostname: jit
+    labels:
+      - traefik.http.routers.jit.rule=Path(`/doc/example.pdf`)
+    restart: always
+    networks:
+      - graalkus_network
+    ports:
+      - "8081:8080"
+
+  graalkus-aot-mixed:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:latest-native-pgo
+    container_name: graalkus-aot-mixed
+    hostname: aot
+    labels:
+      - traefik.http.routers.aot.rule=PathPrefix(`/doc`)
+    restart: always
+    networks:
+      - graalkus_network
+    ports:
+      - "8082:8080"
