@@ -1,0 +1,79 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: graalkus-api-mixed-traefik
+  labels:
+    mode: aot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graalkus-api-mixed-traefic-app
+  template:
+    metadata:
+      labels:
+        app: graalkus-api-mixed-traefic-app
+    spec:
+      containers:
+        - name: graalkus-api-mixed-traefic
+          image: docker.io/traefik
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: http-8081
+              containerPort: 8081
+              protocol: TCP
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "1000m"
+            requests:
+              memory: "64Mi"
+              cpu: "10m"
+          volumeMounts:
+            - name: traefik-config-dir
+              mountPath: /etc/traefik
+          livenessProbe:
+            httpGet:
+              path: /dashboard/
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: traefik-config-dir
+          configMap:
+            defaultMode: 420
+            items:
+              - key: traefik.yml
+                path: traefik.yml
+            name: traefik-config-cm
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: graalkus-api-mixed-traefic-service
+spec:
+  ports:
+    - name: http-80
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: http-8081
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: graalkus-api-mixed-traefic-app
