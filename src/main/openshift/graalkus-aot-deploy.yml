@@ -3,7 +3,9 @@ apiVersion: apps/v1
 metadata:
   name: graalkus-aot
   labels:
+    app: graalkus
     mode: aot
+    pgo: 'false'
 spec:
   replicas: 1
   selector:

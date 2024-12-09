@@ -3,7 +3,8 @@ apiVersion: apps/v1
 metadata:
   name: graalkus-jit
   labels:
-    mode: aot
+    app: graalkus
+    mode: jit
 spec:
   replicas: 1
   selector:

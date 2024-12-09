@@ -3,7 +3,8 @@ apiVersion: apps/v1
 metadata:
   name: graalkus-api-mixed-httpd
   labels:
-    mode: aot
+    app: graalkus
+    mode: api
 spec:
   replicas: 1
   selector:
