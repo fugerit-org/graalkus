@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: graalkus-api-mixed-krakend
-          image: docker.io/devopsfaith/krakend
+          image: docker.io/fugeritorg/graalkus:api-mixed-krakend
           ports:
             - name: http
               containerPort: 8080
@@ -28,6 +28,9 @@ spec:
             requests:
               memory: "64Mi"
               cpu: "10m"
+          securityContext:
+            runAsNonRoot: false
+            #runAsUser: 1000
           volumeMounts:
             - mountPath: /etc/krakend/krakend.json
               name: graalkus-api-mixed-krakend-volume
