@@ -19,13 +19,13 @@ function print() {
 # Main entry point
 main() {
 
-  # check if h2load is installed
-  if [ ! -x "$(command -v h2load)" ]; then
-    echo "Missing h2load, please install nghttp2"
-    echo "On MacOS : brew install nghttp2"
-    echo "On Ubuntu/Debian based : apt-get install nghttp2-client"
-    echo "On Fedora/RPM based : dnf install nghttp2"
-    echo "For more info : https://nghttp2.org/documentation/package_README.html"
+  # check if siege is installed
+  if [ ! -x "$(command -v siege)" ]; then
+    echo "Missing siege, please install it"
+    echo "On MacOS : brew install siege"
+    echo "On Ubuntu/Debian based : apt install siege"
+    echo "On Fedora/RPM based : dnf install siege"
+    echo "For more info : https://github.com/JoeDog/siege"
     exit 1
   fi
 
