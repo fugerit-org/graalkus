@@ -1,15 +1,15 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: graalkus-jit-hpda
+  name: graalkus-jit-std-hpda
   namespace: fugerit-dev
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: graalkus-jit
+    name: graalkus-jit-std
   minReplicas: 1
-  maxReplicas: 1
+  maxReplicas: 4
   behavior:
     scaleDown:
       policies:
@@ -24,7 +24,7 @@ spec:
     scaleUp:
       policies:
         - type: Pods
-          value: 1
+          value: 4
           periodSeconds: 15
         - type: Percent
           value: 50

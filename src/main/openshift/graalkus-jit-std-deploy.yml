@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: graalkus-jit
+  name: graalkus-jit-std
   labels:
     app: graalkus
     mode: jit
@@ -9,15 +9,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: graalkus-jit-app
+      app: graalkus-jit-std-app
   template:
     metadata:
       labels:
-        app: graalkus-jit-app
+        app: graalkus-jit-std-app
     spec:
       containers:
-        - name: graalkus-jit
-          image: docker.io/fugeritorg/graalkus:v1.0.0
+        - name: graalkus-jit-std
+          image: docker.io/fugeritorg/graalkus:latest
           ports:
             - name: http
               containerPort: 8080
@@ -33,7 +33,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: graalkus-jit-service
+  name: graalkus-jit-std-service
 spec:
   ports:
     - name: http-80
@@ -41,4 +41,4 @@ spec:
       protocol: TCP
       targetPort: 8080
   selector:
-    app: graalkus-jit-app
+    app: graalkus-jit-std-app
