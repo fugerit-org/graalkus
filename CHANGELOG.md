@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+[1.0.0] - 2024-12-10
+
 ### Added
 
+- OpenShift configuration files for sandbox
+- Docker compose files for local run
 - GitHub workflow for SonarCloud and Docker Hub publish
-- graalkus project
-- asciidock book version
+- Graalkus project
+- AsciiDoc book version

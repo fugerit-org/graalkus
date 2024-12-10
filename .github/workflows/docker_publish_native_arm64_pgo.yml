@@ -48,7 +48,7 @@ jobs:
       - name: Build instrumented
         run: 'mvn clean package -Dnative -Pinstrumented'
       - name: Run workload
-        run: './src/main/script/bench-graph-h2-load.sh -u http://localhost:8999 -a "graalkus-1.0.0-SNAPSHOT-instrumented-runner -Dquarkus.http.port=8999" -m AOT'
+        run: './src/main/script/bench-graph-h2-load.sh -u http://localhost:8999 -a "graalkus*instrumented-runner -Dquarkus.http.port=8999" -m AOT'
       - name: Build optimzed
         run: 'mvn clean package -Dnative -Poptimized'
         # using action https://github.com/marketplace/actions/build-and-push-docker-images
