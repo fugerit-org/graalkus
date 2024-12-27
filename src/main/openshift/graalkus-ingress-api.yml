@@ -1,0 +1,38 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: graalkus-ingress-simple
+  namespace: fugerit-dev
+spec:
+  rules:
+    - host: graalkus-api-ingress-fugerit-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com
+      http:
+        paths:
+          - path: /doc/example.pdf
+            pathType: Prefix
+            backend:
+              service:
+                name: graalkus-jit-service
+                port:
+                  number: 80
+          - path: /doc/example.md
+            pathType: Prefix
+            backend:
+              service:
+                name: graalkus-aot-pgo-service
+                port:
+                  number: 80
+          - path: /doc/example.html
+            pathType: Prefix
+            backend:
+              service:
+                name: graalkus-aot-pgo-service
+                port:
+                  number: 80
+          - path: /doc/example.adoc
+            pathType: Prefix
+            backend:
+              service:
+                name: graalkus-aot-pgo-service
+                port:
+                  number: 80

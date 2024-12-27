@@ -10,7 +10,8 @@ spec:
       port:
         number: 80
   rules:
-    - http:
+    - host: graalkus-api-ingress-fugerit-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com
+      http:
         paths:
           - path: /doc/example.pdf
             pathType: Exact
