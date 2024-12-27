@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- fj-doc version 8.11.7
 - docker-compose-mixed.yml no set to v1.0.0 images
 
 [1.0.0] - 2024-12-10
