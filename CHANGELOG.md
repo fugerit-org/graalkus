@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- startup doc initialization
+
 ### Changed
 
 - docker-compose-mixed.yml no set to v1.0.0 images
