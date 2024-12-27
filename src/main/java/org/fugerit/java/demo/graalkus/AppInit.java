@@ -13,7 +13,7 @@ public class AppInit {
     DocHelper docHelper;
 
     void onStart(@Observes StartupEvent ev) {
-        InitHandler.initDocAllAsync( docHelper.getDocProcessConfig().getFacade().handlers() );
+        InitHandler.initDocAllAsync(docHelper.getDocProcessConfig().getFacade().handlers());
     }
 
 }

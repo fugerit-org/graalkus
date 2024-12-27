@@ -10,8 +10,11 @@ import org.fugerit.java.doc.freemarker.process.FreemarkerDocProcessConfigFacade;
 @ApplicationScoped
 public class DocHelper {
 
-     private FreemarkerDocProcessConfig docProcessConfig = FreemarkerDocProcessConfigFacade.loadConfigSafe( "cl://graalkus/fm-doc-process-config.xml" );
+    private FreemarkerDocProcessConfig docProcessConfig = FreemarkerDocProcessConfigFacade
+            .loadConfigSafe("cl://graalkus/fm-doc-process-config.xml");
 
-     public FreemarkerDocProcessConfig getDocProcessConfig() { return this.docProcessConfig; }
+    public FreemarkerDocProcessConfig getDocProcessConfig() {
+        return this.docProcessConfig;
+    }
 
 }

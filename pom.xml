@@ -18,6 +18,10 @@
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <base-native-build-args>-H:IncludeResources=graalkus/fm-doc-process-config.xml,-H:IncludeResources=graalkus/template/document.ftl</base-native-build-args>
     <quarkus.native.additional-build-args>${base-native-build-args}</quarkus.native.additional-build-args>
+    <!-- formatter plugin -->
+    <mvn-formatter-plugin-version>2.24.1</mvn-formatter-plugin-version>
+    <fugerit-code-rules-version>0.1.1</fugerit-code-rules-version>
+    <format.skip>false</format.skip>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -200,6 +204,31 @@
           <failOnErrors>true</failOnErrors>
           <reportOutputFolder>${project.build.directory}/freemarker-syntax-verify-report</reportOutputFolder>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>net.revelc.code.formatter</groupId>
+        <artifactId>formatter-maven-plugin</artifactId>
+        <version>${mvn-formatter-plugin-version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.fugerit.java</groupId>
+            <artifactId>fugerit-code-rules</artifactId>
+            <version>${fugerit-code-rules-version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <configFile>org/fugerit/java/coderules/eclipse-format.xml</configFile>
+          <skip>${format.skip}</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <id>format-sources</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>format</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
