@@ -1,5 +1,6 @@
 package org.fugerit.java.demo.graalkus;
 
+import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -22,6 +23,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 @Slf4j
 @Path("/doc")
 @ApplicationScoped
+@RunOnVirtualThread
 public class DocResource {
 
     @Inject
