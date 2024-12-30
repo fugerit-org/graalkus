@@ -1,7 +1,9 @@
 quarkus:
+
+  banner:
+    path: banner.txt
+
   openshift:
     route:
       expose: true
 
-  banner:
-    path: banner.txt
