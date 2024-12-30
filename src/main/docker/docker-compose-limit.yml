@@ -14,10 +14,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 1.0
+          cpus: '1.0'
           memory: 128M
         reservations:
-          cpus: 1.0
+          cpus: '1.0'
           memory: 32M
   graalkus-aot-limit:
     # it is possible to pick more options from :
@@ -31,10 +31,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 1.0
+          cpus: '1.0'
           memory: 64M
         reservations:
-          cpus: 1.0
+          cpus: '1.0'
           memory: 32M
   graalkus-aot-optimized-limit:
     # it is possible to pick more options from :
@@ -48,8 +48,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 1.0
+          cpus: '1.0'
           memory: 64M
         reservations:
-          cpus: 1.0
+          cpus: '1.0'
           memory: 32M
