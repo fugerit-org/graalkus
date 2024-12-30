@@ -9,7 +9,7 @@ For this benchmark we will use a script that can be found in the folder link:htt
 
 The script needs :
 
-* link:https://nghttp2.org/documentation/package_README.html[h2load], for actual benchmark
+* link:https://github.com/JoeDog/siege[siege], for actual benchmark
 * link:https://github.com/astrofrog/psrecord[psrecord], to plot resources usage
 
 ==== Benchmark JIT application
@@ -25,7 +25,7 @@ Run the script (will also launch the application)
 
 [source,shell]
 ----
-./src/main/script/bench-graph-h2-load.sh -m JIT
+./src/main/script/bench-graph-siege.sh -m JIT
 ----
 
 ==== Benchmark AOT application
@@ -41,7 +41,7 @@ Run the script (will also launch the application)
 
 [source,shell]
 ----
-./src/main/script/bench-graph-h2-load.sh -m AOT
+./src/main/script/bench-graph-siege.sh -m AOT
 ----
 
 [#step-04-benchmark-exec-sample-output]
@@ -62,32 +62,42 @@ With standard script parameters (h2load) :
 
 JIT result :
 
-[source,txt]
+[source,json]
 ----
-finished in 13.11s, 19068.33 req/s, 23.58MB/s
-requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
-status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
-traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
-                     min         max         mean         sd        +/- sd
-time for request:      120us     11.00ms       600us       468us    92.87%
-time for connect:      112us       588us       312us       141us    66.67%
-time to 1st byte:     3.93ms      5.26ms      4.27ms       356us    91.67%
-req/s           :    1589.12     1596.61     1592.01        2.11    75.00%
+{
+    "transactions":			      333324,
+	"availability":			      100.00,
+	"elapsed_time":			       25.92,
+	"data_transferred":		      404.11,
+	"response_time":		        0.00,
+	"transaction_rate":		    12859.72,
+	"throughput":			       15.59,
+	"concurrency":			       11.31,
+	"successful_transactions":	      333324,
+	"failed_transactions":		           0,
+	"longest_transaction":		        0.07,
+	"shortest_transaction":		        0.00
+}
 ----
 
 AOT result :
 
-[source,txt]
+[source,json]
 ----
-finished in 16.87s, 14819.13 req/s, 18.33MB/s
-requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
-status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
-traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
-                     min         max         mean         sd        +/- sd
-time for request:      207us     14.50ms       781us       531us    94.41%
-time for connect:       89us       542us       286us       137us    66.67%
-time to 1st byte:     1.57ms      2.11ms      1.74ms       172us    75.00%
-req/s           :    1234.99     1241.60     1238.78        2.47    58.33%
+{
+    "transactions":			      333324,
+	"availability":			      100.00,
+	"elapsed_time":			       34.78,
+	"data_transferred":		      404.11,
+	"response_time":		        0.00,
+	"transaction_rate":		     9583.78,
+	"throughput":			       11.62,
+	"concurrency":			       11.43,
+	"successful_transactions":	      333324,
+	"failed_transactions":		           0,
+	"longest_transaction":		        0.13,
+	"shortest_transaction":		        0.00
+}
 ----
 
 And the relative resource plotting :
@@ -96,11 +106,11 @@ And the relative resource plotting :
 --
 [.left]
 .JIT Benchmark plotting
-image::01_step_04_jit_plot.png["JIT Benchmark plotting"]
+image::01_step_04_jit_plot_a.png["JIT Benchmark plotting"]
 
 [.left]
 .AOT Benchmark plotting
-image::01_step_04_aot_plot.png["AOT Benchmark plotting"]
+image::01_step_04_aot_plot_a.png["AOT Benchmark plotting"]
 --
 
 As you can see :

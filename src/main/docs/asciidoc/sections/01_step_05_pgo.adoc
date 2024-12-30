@@ -33,14 +33,14 @@ mvn install -Dnative -Pinstrumented
 
 [source,shell]
 ----
-./target/graalkus-1.0.0-SNAPSHOT-instrumented-runner
+./target/graalkus-*-instrumented-runner
 ----
 
 4. Provide some relevant workload :
 
 [source,shell]
 ----
-./src/main/script/bench-graph-h2-load.sh
+./src/main/script/bench-graph-siege.sh
 ----
 
 After the application shutdown a _.iprof_ file will be available in the working folder.
@@ -73,30 +73,36 @@ mvn install -Dnative -Poptimized
 
 [source,shell]
 ----
-./src/main/script/bench-graph-h2-load.sh -m AOT -a graalkus-1.0.0-SNAPSHOT-optimized-runner
+./src/main/script/bench-graph-siege.sh -m AOT -a graalkus-*-optimized-runner
 ----
 
 4. Sample optimized result
 
 This section contains the result of an optimized benchmark run :
 
-[source,txt]
+[source,json]
 ----
-finished in 12.84s, 19464.30 req/s, 24.07MB/s
-requests: 250000 total, 250000 started, 250000 done, 250000 succeeded, 0 failed, 0 errored, 0 timeout
-status codes: 250000 2xx, 0 3xx, 0 4xx, 0 5xx
-traffic: 309.20MB (324215904) total, 733.51KB (751116) headers (space savings 95.35%), 303.00MB (317714500) data
-                     min         max         mean         sd        +/- sd
-time for request:      150us     32.20ms       588us       542us    96.14%
-time for connect:      101us       576us       317us       148us    66.67%
-time to 1st byte:     1.19ms      2.09ms      1.65ms       252us    75.00%
-req/s           :    1622.11     1632.73     1628.10        3.58    58.33%
+{
+    "transactions":			      333324,
+	"availability":			      100.00,
+	"elapsed_time":			       25.92,
+	"data_transferred":		      404.11,
+	"response_time":		        0.00,
+	"transaction_rate":		    12859.72,
+	"throughput":			       15.59,
+	"concurrency":			       11.33,
+	"successful_transactions":	      333324,
+	"failed_transactions":		           0,
+	"longest_transaction":		        0.05,
+	"shortest_transaction":		        0.00
+}
+
 ----
 
 And the relative resource plotting :
 
 .Optimized AOT Benchmark plotting
-image::01_step_04_aot_optimized_plot.png["Optimized AOT Benchmark plotting"]
+image::01_step_04_aot_optimized_plot_a.png["Optimized AOT Benchmark plotting"]
 
 Let's compare the result with the xref:#step-04-benchmark-exec-sample-output[Unoptimized benchmark] (they have been run on the same system).
 
