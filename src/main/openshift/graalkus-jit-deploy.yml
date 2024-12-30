@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: graalkus-jit
-          image: docker.io/fugeritorg/graalkus:v1.0.0
+          image: docker.io/fugeritorg/graalkus:v1.2.0
           ports:
             - name: http
               containerPort: 8080
@@ -42,3 +42,40 @@ spec:
       targetPort: 8080
   selector:
     app: graalkus-jit-app
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: graalkus-jit
+  namespace: fugerit-dev
+  annotations:
+    openshift.io/host.generated: 'true'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      fieldsType: FieldsV1
+    - manager: openshift-router
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      fieldsType: FieldsV1
+      subresource: status
+spec:
+  host: graalkus-jit-<PROJECT_NAME>.<CLUSTER_DOMAIN>
+  path: /
+  to:
+    kind: Service
+    name: graalkus-jit-service
+    weight: 100
+  port:
+    targetPort: http-80
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: graalkus-jit-<PROJECT_NAME>.<CLUSTER_DOMAIN>
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.<CLUSTER_DOMAIN>
