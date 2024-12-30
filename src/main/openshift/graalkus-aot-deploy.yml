@@ -4,8 +4,7 @@ metadata:
   name: graalkus-aot
   labels:
     app: graalkus
-    mode: aot
-    pgo: 'false'
+    mode: jit
 spec:
   replicas: 1
   selector:
@@ -18,18 +17,18 @@ spec:
     spec:
       containers:
         - name: graalkus-aot
-          image: docker.io/fugeritorg/graalkus:v1.0.0-native
+          image: docker.io/fugeritorg/graalkus:v1.2.0
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           resources:
             limits:
-              memory: "128Mi"
+              memory: "512Mi"
               cpu: "1000m"
             requests:
               memory: "64Mi"
-              cpu: "10m"
+              cpu: "500m"
 ---
 kind: Service
 apiVersion: v1
@@ -43,3 +42,74 @@ spec:
       targetPort: 8080
   selector:
     app: graalkus-aot-app
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: graalkus-aot
+  namespace: <PROJECT_NAME>
+  annotations:
+    openshift.io/host.generated: 'true'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      fieldsType: FieldsV1
+    - manager: openshift-router
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      fieldsType: FieldsV1
+      subresource: status
+spec:
+  host: graalkus-aot-<PROJECT_NAME>.<CLUSTER_DOMAIN>
+  path: /
+  to:
+    kind: Service
+    name: graalkus-aot-service
+    weight: 100
+  port:
+    targetPort: http-80
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: graalkus-aot-<PROJECT_NAME>.<CLUSTER_DOMAIN>
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.<CLUSTER_DOMAIN>
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: graalkus-aot-hpda
+  namespace: <PROJECT_NAME>
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: graalkus-aot
+  minReplicas: 1
+  maxReplicas: 1
+  behavior:
+    scaleDown:
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Min
+      stabilizationWindowSeconds: 60
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0

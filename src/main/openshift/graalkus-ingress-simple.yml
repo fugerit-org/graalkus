@@ -2,10 +2,10 @@ kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
   name: graalkus-ingress-simple
-  namespace: fugerit-dev
+  namespace: <PROJECT_NAME>
 spec:
   rules:
-    - host: graalkus-api-simple-fugerit-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com
+    - host: graalkus-api-simple-<PROJECT_NAME>.<CLUSTER_DOMAIN>
       http:
         paths:
           - path: /doc/example.pdf

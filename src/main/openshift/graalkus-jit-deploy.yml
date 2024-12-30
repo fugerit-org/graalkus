@@ -47,7 +47,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: graalkus-jit
-  namespace: fugerit-dev
+  namespace: <PROJECT_NAME>
   annotations:
     openshift.io/host.generated: 'true'
   managedFields:
@@ -79,3 +79,37 @@ status:
           status: 'True'
       wildcardPolicy: None
       routerCanonicalHostname: router-default.<CLUSTER_DOMAIN>
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: graalkus-jit-hpda
+  namespace: <PROJECT_NAME>
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: graalkus-jit
+  minReplicas: 1
+  maxReplicas: 1
+  behavior:
+    scaleDown:
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Min
+      stabilizationWindowSeconds: 60
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 15
+        - type: Percent
+          value: 50
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
