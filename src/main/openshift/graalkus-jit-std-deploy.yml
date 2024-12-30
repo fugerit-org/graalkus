@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: graalkus-aot
+  name: graalkus-jit-std
   labels:
     app: graalkus
     mode: jit
@@ -9,31 +9,31 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: graalkus-aot-app
+      app: graalkus-jit-std-app
   template:
     metadata:
       labels:
-        app: graalkus-aot-app
+        app: graalkus-jit-std-app
     spec:
       containers:
-        - name: graalkus-aot
-          image: docker.io/fugeritorg/graalkus:v1.2.1-native
+        - name: graalkus-jit-std
+          image: docker.io/fugeritorg/graalkus:v1.2.0
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           resources:
             limits:
-              memory: "512Mi"
+              memory: "1024Mi"
               cpu: "1000m"
             requests:
-              memory: "64Mi"
-              cpu: "500m"
+              memory: "128Mi"
+              cpu: "300m"
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: graalkus-aot-service
+  name: graalkus-jit-std-service
 spec:
   ports:
     - name: http-80
@@ -41,12 +41,12 @@ spec:
       protocol: TCP
       targetPort: 8080
   selector:
-    app: graalkus-aot-app
+    app: graalkus-jit-std-app
 ---
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: graalkus-aot
+  name: graalkus-jit-std
   namespace: <PROJECT_NAME>
   annotations:
     openshift.io/host.generated: 'true'
@@ -61,18 +61,18 @@ metadata:
       fieldsType: FieldsV1
       subresource: status
 spec:
-  host: graalkus-aot-<PROJECT_NAME>.<CLUSTER_DOMAIN>
+  host: graalkus-jit-std-<PROJECT_NAME>.<CLUSTER_DOMAIN>
   path: /
   to:
     kind: Service
-    name: graalkus-aot-service
+    name: graalkus-jit-std-service
     weight: 100
   port:
     targetPort: http-80
   wildcardPolicy: None
 status:
   ingress:
-    - host: graalkus-aot-<PROJECT_NAME>.<CLUSTER_DOMAIN>
+    - host: graalkus-jit-std-<PROJECT_NAME>.<CLUSTER_DOMAIN>
       routerName: default
       conditions:
         - type: Admitted
@@ -83,15 +83,15 @@ status:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: graalkus-aot-hpda
+  name: graalkus-jit-std-hpda
   namespace: <PROJECT_NAME>
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: graalkus-aot
-  minReplicas: 1
-  maxReplicas: 3
+    name: graalkus-jit-std
+  minReplicas: 2
+  maxReplicas: 10
   behavior:
     scaleDown:
       policies:
@@ -102,14 +102,14 @@ spec:
           value: 50
           periodSeconds: 30
       selectPolicy: Min
-      stabilizationWindowSeconds: 120
+      stabilizationWindowSeconds: 30
     scaleUp:
       policies:
         - type: Pods
-          value: 3
+          value: 1
           periodSeconds: 30
         - type: Percent
           value: 50
           periodSeconds: 30
       selectPolicy: Max
-      stabilizationWindowSeconds: 60
+      stabilizationWindowSeconds: 30

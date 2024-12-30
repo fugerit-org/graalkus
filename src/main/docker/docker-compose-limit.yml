@@ -6,11 +6,11 @@ services:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:latest
+    image: fugeritorg/graalkus:v1.2.1
     container_name: graalkus-jit-limit
     restart: always
     ports:
-      - "8084:8080"
+      - "9084:8080"
     deploy:
       resources:
         limits:
@@ -18,52 +18,38 @@ services:
           memory: 128M
         reservations:
           cpus: 1.0
-          memory: 64M
+          memory: 32M
   graalkus-aot-limit:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:latest-native
+    image: fugeritorg/graalkus:v1.2.1-native
     container_name: graalkus-aot-limit
     restart: always
     ports:
-      - "8085:8080"
+      - "9085:8080"
     deploy:
       resources:
         limits:
           cpus: 1.0
-          memory: 128M
+          memory: 64M
         reservations:
           cpus: 1.0
-          memory: 64M
+          memory: 32M
   graalkus-aot-optimized-limit:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:latest-native-pgo
+    image: fugeritorg/graalkus:v1.2.1-native-pgo
     container_name: graalkus-aot-optimized-limit
     restart: always
     ports:
-      - "8086:8080"
+      - "9086:8080"
     deploy:
       resources:
         limits:
           cpus: 1.0
-          memory: 128M
+          memory: 64M
         reservations:
           cpus: 1.0
-          memory: 64M
-  graalkus-jit-limit-high:
-    image: fugeritorg/graalkus:latest
-    container_name: graalkus-jit-high-limit
-    restart: always
-    ports:
-      - "8087:8080"
-    deploy:
-      resources:
-        limits:
-          cpus: 1.0
-          memory: 256M
-        reservations:
-          cpus: 1.0
-          memory: 64M
+          memory: 32M

@@ -24,11 +24,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              memory: "512Mi"
+              memory: "1024Mi"
               cpu: "1000m"
             requests:
-              memory: "64Mi"
-              cpu: "500m"
+              memory: "128Mi"
+              cpu: "300m"
 ---
 kind: Service
 apiVersion: v1
@@ -91,25 +91,25 @@ spec:
     kind: Deployment
     name: graalkus-jit
   minReplicas: 1
-  maxReplicas: 1
+  maxReplicas: 5
   behavior:
     scaleDown:
       policies:
         - type: Pods
           value: 1
-          periodSeconds: 15
+          periodSeconds: 30
         - type: Percent
           value: 50
-          periodSeconds: 15
+          periodSeconds: 30
       selectPolicy: Min
-      stabilizationWindowSeconds: 60
+      stabilizationWindowSeconds: 30
     scaleUp:
       policies:
         - type: Pods
           value: 1
-          periodSeconds: 15
+          periodSeconds: 30
         - type: Percent
           value: 50
-          periodSeconds: 15
+          periodSeconds: 30
       selectPolicy: Max
-      stabilizationWindowSeconds: 0
+      stabilizationWindowSeconds: 30

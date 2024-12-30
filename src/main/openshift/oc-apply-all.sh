@@ -4,7 +4,7 @@
 #
 # for instance :
 #
-# ' ./src/main/openshift/oc-apply-all.sh fugerit-dev apps.rm3.7wse.p1.openshiftapps.com'
+# './src/main/openshift/oc-apply-all.sh fugerit-dev apps.rm3.7wse.p1.openshiftapps.com'
 
 function applyAll() {
 
@@ -22,7 +22,9 @@ function applyAll() {
   CLUSTER_DOMAIN=$2
 
   # script list
-  scripts=("graalkus-jit-deploy.yml" "graalkus-aot-pgo-deploy.yml" "graalkus-aot-deploy.yml" "graalkus-ingress-simple.yml")
+  scripts=("graalkus-jit-deploy.yml" "graalkus-aot-pgo-deploy.yml" "graalkus-aot-deploy.yml" "graalkus-ingress-simple.yml" "graalkus-jit-std-deploy.yml")
+  #scripts=("graalkus-jit-deploy.yml" "graalkus-aot-pgo-deploy.yml" "graalkus-ingress-simple.yml")
+  #scripts=("graalkus-jit-std-deploy.yml")
 
   # iterate over scripts
   for script in "${scripts[@]}"; do

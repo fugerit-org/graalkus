@@ -32,4 +32,3 @@ And after xref:01_step_05_pgo.adoc[PGO], the AOT optimized version :
 mvn clean install -Dnative -Poptimized -Dquarkus.openshift.deploy=true -Dquarkus.openshift.name=graalkus-aot-pgo
 ----
 
-

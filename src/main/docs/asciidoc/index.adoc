@@ -36,11 +36,15 @@ include::sections/02_step_03_ci_aot_pgo.adoc[]
 
 include::sections/02_step_04_limit.adoc[]
 
+include::sections/02_step_05_mixed.adoc[]
+
 include::sections/03_openshift.adoc[]
 
 include::sections/03_step_01_quarkus_configuration.adoc[]
 
 include::sections/03_step_02_quarkus_deployment.adoc[]
+
+include::sections/03_step_03_benchmark.adoc[]
 
 include::sections/appendix-a.adoc[]
 

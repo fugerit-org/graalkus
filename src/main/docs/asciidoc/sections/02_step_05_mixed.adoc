@@ -1,0 +1,187 @@
+[#step-05-ci-api-gateway]
+=== Benchmark with API gateway
+
+In the end here is a configuration with an API gateway. We are going to use link:https://traefik.io/traefik/[Traefik].
+
+[source,yaml]
+----
+# docker compose -f src/main/docker/docker-compose-mixed.yml up -d
+
+networks:
+  graalkus_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.80.0.0/16
+
+# Define the services
+services:
+
+  api-gateway-mixed:
+    image: traefik:v2.5
+    container_name: graalkus-api-mixed
+    volumes:
+      - ${PWD}/src/main/docker/traefik-mixed/traefik.yml:/etc/traefik/traefik.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - graalkus_network
+    ports:
+      - "8088:80"
+      - "8089:8080"
+
+  graalkus-jit-mixed:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:v1.2.1
+    container_name: graalkus-jit-mixed
+    hostname: jit
+    labels:
+      - traefik.http.routers.jit.rule=Path(`/doc/example.pdf`)
+    restart: always
+    networks:
+      - graalkus_network
+    ports:
+      - "8086:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 256M
+        reservations:
+          cpus: 1.0
+          memory: 64M
+
+  graalkus-aot-mixed:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:v1.2.1-native-pgo
+    container_name: graalkus-aot-mixed
+    hostname: aot
+    labels:
+      - traefik.http.routers.aot.rule=PathPrefix(`/doc`)
+    restart: always
+    networks:
+      - graalkus_network
+    ports:
+      - "8087:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 1.0
+          memory: 64M
+        reservations:
+          cpus: 1.0
+          memory: 32M
+
+  graalkus-jit-std:
+    # it is possible to pick more options from :
+    # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
+    # or build your own image locally.
+    image: fugeritorg/graalkus:v1.2.1
+    container_name: graalkus-jit-mixed-std
+    hostname: jit-std
+    restart: always
+    networks:
+      - graalkus_network
+    ports:
+      - "8085:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: 2.0
+          memory: 512M
+        reservations:
+          cpus: 1.0
+          memory: 128M
+----
+
+and start the containers :
+
+[source,shell]
+----
+docker compose -f src/main/docker/docker-compose-mixed.yml up -d
+----
+
+For this compose configuration the link:https://hub.docker.com/repository/docker/fugeritorg/graalkus/general[pre-built container images].
+
+NOTE: all the test up now were run only on functions both supported by JIT and AOT version of the application. The benchmark in this section will be run with the all the features enabled, using the _-p_ flag.
+
+Then benchmark one by one the services :
+
+==== 1. API Gateway version
+
+Resources total :
+
+* Min CPU : 1.0
+* Min memory : 96M
+* Max CPU : 2.0
+* Max memory : 320M
+
+In this scenario :
+
+* Traefik will be used as api gateway.
+* /doc/example.pdf path will be served by JIT application.
+* All other urls will be served by AOT application.
+
+[source,shell]
+----
+./src/main/script/bench-graph-siege.sh -p -u http://localhost:8088
+----
+
+[source,json]
+----
+{
+  "transactions": 300000,
+  "availability": 100,
+  "elapsed_time": 155.46,
+  "data_transferred": 613.37,
+  "response_time": 0.01,
+  "transaction_rate": 1929.76,
+  "throughput": 3.95,
+  "concurrency": 11.86,
+  "successful_transactions": 300000,
+  "failed_transactions": 0,
+  "longest_transaction": 1.14,
+  "shortest_transaction": 0
+}
+----
+
+==== 2. Pure JIT Version
+
+In this scenario all urls are served by the JIT application.
+
+Resources :
+
+* Min CPU : 1.0
+* Min memory : 128M
+* Max CPU : 2.0
+* Max memory : 512M
+
+[source,shell]
+----
+./src/main/script/bench-graph-siege.sh -p -u http://localhost:8085
+----
+
+[source,json]
+----
+{
+  "transactions": 300000,
+  "availability": 100,
+  "elapsed_time": 145.36,
+  "data_transferred": 613.37,
+  "response_time": 0.01,
+  "transaction_rate": 2063.84,
+  "throughput": 4.22,
+  "concurrency": 11.85,
+  "successful_transactions": 300000,
+  "failed_transactions": 0,
+  "longest_transaction": 0.33,
+  "shortest_transaction": 0
+}
+----
+
+==== Conclusion
+
+The mixed API Gateway + JIT + AOT PGO version has a 40% memory saving compared to the pure JIT version.

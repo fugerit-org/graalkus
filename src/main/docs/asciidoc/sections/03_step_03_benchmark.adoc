@@ -1,0 +1,60 @@
+[#step-03-openshift-benchmark]
+=== OpenShift benchmark
+
+==== 1. Pure JIT Version
+
+[source,json]
+----
+{
+  "transactions": 300000,
+  "availability": 100,
+  "elapsed_time": 213.9,
+  "data_transferred": 613.37,
+  "response_time": 0.01,
+  "transaction_rate": 1402.52,
+  "throughput": 2.87,
+  "concurrency": 11.42,
+  "successful_transactions": 300000,
+  "failed_transactions": 0,
+  "longest_transaction": 1.06,
+  "shortest_transaction": 0
+}
+----
+
+[.float-group]
+--
+[.left]
+.Pure JIT Benchmark OpenShift
+image::03_step_03_oc-jit-std.png["JIT Benchmark OpenShift"]
+--
+
+==== 2. Mixed AOT/JIT Version
+
+[source,json]
+----
+{
+  "transactions": 300000,
+  "availability": 100,
+  "elapsed_time": 200.06,
+  "data_transferred": 613.37,
+  "response_time": 0.01,
+  "transaction_rate": 1499.55,
+  "throughput": 3.07,
+  "concurrency": 11.61,
+  "successful_transactions": 300000,
+  "failed_transactions": 0,
+  "longest_transaction": 1.06,
+  "shortest_transaction": 0
+}
+----
+
+[.float-group]
+--
+[.left]
+.API AOT Benchmark OpenShift
+image::03_step_03_oc-api-aot.png["API AOT Benchmark OpenShift"]
+
+[.left]
+.API JIT Benchmark OpenShift
+image::03_step_03_oc-api-jit.png["API JIT Benchmark OpenShift"]
+--
