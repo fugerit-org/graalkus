@@ -1,16 +1,15 @@
 ---
 # You can also start simply with 'default'
-theme: seriph
+theme: default
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
+background: './images/cover.png'
 # some information about your slides (markdown enabled)
-title: Welcome to Slidev
+title: 'Graalkus: A GraalVM/Quarkus Demo Migrating from JIT to AOT'
 info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
+  ## Graalkus: A GraalVM/Quarkus Demo Migrating from JIT to AOT
 
-  Learn more at [Sli.dev](https://sli.dev)
+  Learn more at [Graalkus](https://github.com/fugerit-org/graalkus)
 # apply unocss classes to the current slide
 class: text-center
 # https://sli.dev/features/drawing
@@ -22,19 +21,16 @@ transition: slide-left
 mdc: true
 ---
 
-# Welcome to Slidev
+# Graalkus
 
-Presentation slides for developers
+A GraalVM/Quarkus Demo Migrating from JIT to AOT
 
 <div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
   Press Space for next page <carbon:arrow-right />
 </div>
 
 <div class="abs-br m-6 text-xl">
-  <button @click="$slidev.nav.openInEditor" title="Open in Editor" class="slidev-icon-btn">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" class="slidev-icon-btn">
+  <a href="https://github.com/fugerit-org/graalkus" target="_blank" class="slidev-icon-btn">
     <carbon:logo-github />
   </a>
 </div>
@@ -44,30 +40,9 @@ The last comment block of each slide will be treated as slide notes. It will be 
 -->
 
 ---
-transition: fade-out
+src: ./pages/01_what_is.md
 ---
-
-# What is Slidev?
-
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - themes can be shared and re-used as npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embed Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export to PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - virtually anything that's possible on a webpage is possible in Slidev
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
-
+ 
 <style>
 h1 {
   background-color: #2B90B6;
