@@ -62,98 +62,73 @@ mvn package -Dnative
 2. Start
 
 ```shell
-./target/graalkus-1.0.0-SNAPSHOT-runner
+./target/graalkus-*-runner
 ```
 
-## Overview
+## Container deployment
 
-This project has been initialized using [fj-doc-maven-plugin init goal](https://venusdocs.fugerit.org/guide/#maven-plugin-goal-init).
+Requirement :
 
-The quarkus 3 structure is similar to running the quarkus create goal : 
+* Container environment (Docker or Podman)
+
+Pick a docker compose file, for instance on docker run : 
 
 ```shell
-mvn io.quarkus.platform:quarkus-maven-plugin:3.17.2:create \
--DprojectGroupId=org.fugerit.java.demo \
--DprojectArtifactId=graalkus \
--Dextensions='rest,rest-jackson,config-yaml,smallrye-openapi'
+docker compose -f src/main/docker/docker-compose.yml up -d
 ```
 
-## Quarkus readme
+NOTE: both amd64 and arm64 (including MacOS) [pre-built images](https://hub.docker.com/r/fugeritorg/graalkus) are available.
 
-From here on, this is the original quarkus readme.
+## Run benchmark with siege
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Requirement :
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+* siege
+* psrecord (optional for plotting)
 
-## Running the application in dev mode
+Start the application and run :
 
-You can run your application in dev mode that enables live coding using:
-
-```shell script
-./mvnw compile quarkus:dev
+```shell
+./src/main/script/bench-graph-siege.sh 
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+## Run benchmark with h2load
 
-## Packaging and running the application
+Requirement :
 
-The application can be packaged using:
+* h2load
+* psrecord (optional for plotting)
 
-```shell script
-./mvnw package
+Start the application and run : 
+
+```shell
+./src/main/script/bench-graph-h2load.sh 
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Run benchmark on different url
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+Default for benchmark is to run on http://localhost:8080.
 
-If you want to build an _über-jar_, execute the following command:
+To run on a different url use the -u parameter, for instance : 
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```shell
+./src/main/script/bench-graph-h2-load.sh -u http://localhost:8081
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+## Run benchmark with plotting
 
-## Creating a native executable
+To run benchmakr with plotting, psrecord should be installed.
 
-You can create a native executable using:
+Build the application without launching it, and run : 
 
-```shell script
-./mvnw package -Dnative
+```shell
+mvn install -Dnative
+./src/main/script/bench-graph-h2-load.sh -m AOT
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+or 
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+```shell
+mvn package
+./src/main/script/bench-graph-h2-load.sh -m JIT
 ```
-
-You can then execute your native executable with: `./target/getting-started-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes with Swagger UI
-- YAML Configuration ([guide](https://quarkus.io/guides/config-yaml)): Use YAML to configure your Quarkus application
-
-## Provided Code
-
-### YAML Config
-
-Configure your application with YAML
-
-[Related guide section...](https://quarkus.io/guides/config-reference#configuration-examples)
-
-The Quarkus application configuration is located in `src/main/resources/application.yml`.
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
