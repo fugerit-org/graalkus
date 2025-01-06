@@ -4,6 +4,7 @@
   <groupId>org.fugerit.java.demo</groupId>
   <artifactId>graalkus</artifactId>
   <version>1.2.3-SNAPSHOT</version>
+  <description>Graalkus: Let Quarkus fly high with GraalVM.</description>
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
     <surefire-plugin.version>3.3.1</surefire-plugin.version>
