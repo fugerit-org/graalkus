@@ -1,7 +1,7 @@
 [#demo-scenario]
 === Demo scenario
 
-This demo is inspired by a real microservice I configured for AOT some time ago.
+This demo is inspired by a real microservice I migrated to AOT some time ago.
 
 The scenario we take in consideration is a JIT application used generate documents in various formats (HTML, MarkDown, AsciiDoc and PDF), through rest services.
 
