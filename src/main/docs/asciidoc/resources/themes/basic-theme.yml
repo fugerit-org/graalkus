@@ -2,7 +2,7 @@ extends:
   - default-with-fallback-font
 cover:
   front:
-    image: image:book_cover_basic_v1.0.0.png[page=2]
+    image: image:book_cover_basic_v2.0.0.png[page=2]
   back:
     image: image:book_cover_back_basic_v1.0.0.png[fit=fill]
 title-page: false
