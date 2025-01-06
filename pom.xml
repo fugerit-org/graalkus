@@ -22,6 +22,7 @@
     <mvn-formatter-plugin-version>2.24.1</mvn-formatter-plugin-version>
     <fugerit-code-rules-version>0.1.1</fugerit-code-rules-version>
     <format.skip>false</format.skip>
+    <maven.compiler.proc>full</maven.compiler.proc>
   </properties>
   <dependencyManagement>
     <dependencies>
