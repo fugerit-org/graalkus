@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OpenShift scripts
 - maven.compiler.proc = full (support lombok with java23)
 
+### Changed
+
+- GraalVM 23 for container build
+
 ## [1.2.1] - 2024-12-30
 
 ### Changed
