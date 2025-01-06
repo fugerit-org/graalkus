@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Slidv site
 - OpenShift scripts
 
 ## [1.2.1] - 2024-12-30
