@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: graalkus-aot
-          image: docker.io/fugeritorg/graalkus:v1.2.1-native
+          image: docker.io/fugeritorg/graalkus:v1.2.2-native
           ports:
             - name: http
               containerPort: 8080
