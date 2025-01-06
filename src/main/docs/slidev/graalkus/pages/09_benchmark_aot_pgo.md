@@ -15,15 +15,15 @@
 {
   "transactions": 333324,
   "availability": 100,
-  "elapsed_time": 25.92,
-  "data_transferred": 404.11,
+  "elapsed_time": 21.67,
+  "data_transferred": 425.72,
   "response_time": 0,
-  "transaction_rate": 12859.72,
-  "throughput": 15.59,
-  "concurrency": 11.33,
+  "transaction_rate": 15381.82,
+  "throughput": 19.65,
+  "concurrency": 11.22,
   "successful_transactions": 333324,
   "failed_transactions": 0,
-  "longest_transaction": 0.05,
+  "longest_transaction": 0.01,
   "shortest_transaction": 0
 }
 </pre>
