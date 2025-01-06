@@ -1,5 +1,14 @@
 # Conclusion
 
+<style>
+td {
+  font-size: 10px;
+}
+li {
+  font-size: 10px;
+}
+</style>
+
 Comparing the benchmark results, it is possible to see : 
 
 * Number of request for JIT and AOT PGO is comparable
