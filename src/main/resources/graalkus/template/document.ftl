@@ -16,7 +16,7 @@
         https://venusdocs.fugerit.org/guide/#doc-format-entry-point
     -->
 
-    <#assign defaultTitle="My sample title XML">
+    <#assign defaultTitle="Graalkus: A GraalVM/Quarkus Demo Migrating from JIT to AOT">
 
     <metadata>
         <!-- Margin for document : left;right;top;bottom -->

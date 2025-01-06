@@ -8,6 +8,7 @@ Graalkus is a migration example from Java Just In Time (JIT) to Ahead Of Time (A
 Soon we will explore the demo project :
 <br/>
 <br/>
+<v-clicks depth="1">
 <ul>
 <li>Implementation - of JIT version</li>
 <li>Conversion - to AOT application</li>
@@ -15,6 +16,7 @@ Soon we will explore the demo project :
 <li>Container - setup</li>
 <li>Deployment - on OpenShift in Slidev</li>
 </ul>
+</v-clicks>
 <br/>
 <br/>
     </td>

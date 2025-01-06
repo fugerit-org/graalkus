@@ -33,8 +33,8 @@ public class DocResource {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             // creates the doc helper
             // create custom data for the fremarker template 'document.ftl'
-            List<People> listPeople = Arrays.asList(new People("Luthien", "Tinuviel", "Queen"),
-                    new People("Thorin", "Oakshield", "King"));
+            List<People> listPeople = Arrays.asList(new People("Marie", "Curie", "Scientist"),
+                    new People("Alan", "Turing", "Mathematician"));
             String chainId = "document";
             // output generation
             docHelper.getDocProcessConfig().fullProcess(chainId, DocProcessContext.newContext("listPeople", listPeople),

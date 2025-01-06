@@ -1,6 +1,10 @@
 # Going AOT
 
-Some modification to the project are needed. The main one is to exclude some dependencies when native profile is activated to avoid build time failure.
+Some modifications to the project are needed. the main ones are : 
+
+<v-clicks depth="1">
+
+1. exclude some dependencies when native profile is activated to avoid build time failure.
 
 ```xml
     <profile>
@@ -19,8 +23,10 @@ Some modification to the project are needed. The main one is to exclude some dep
     </profile>
 ```
 
-And esclude the relevant tests :
+2. exclude the relevant tests :
 
 ```java
     @Test @DisabledInNativeImage void testPdf() { ... }
 ```
+
+</v-clicks>
