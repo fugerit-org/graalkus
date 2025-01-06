@@ -47,6 +47,14 @@ src: ./pages/10_conclusion.md
 ---
 
 ---
+src: ./pages/11_what_next.md
+---
+
+---
+src: ./pages/12_resources.md
+---
+
+---
 src: ./pages/99_repo.md
 ---
 
