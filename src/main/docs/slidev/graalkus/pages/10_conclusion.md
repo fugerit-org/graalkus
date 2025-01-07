@@ -20,8 +20,7 @@ Comparing the benchmark results, it is possible to see :
 |-------------------|-----------|-----------|-----------|
 | request/s         | 16291     | 12340     | 15381     |
 | memory (MB)       | ≈ 400/500 | ≈ 150/200 | ≈ 150/200 |
-| cpu (%)           | ≈ 100%    | ≈ 90%     | ≈ 90%     |
-| cpu (%)           | ≈ 100%    | ≈ 90%     | ≈ 90%     |
+| cpu (%)           | ≈ 150/100 | ≈ 100     | ≈ 100     |
 | startup time (ms) | 682       | 25        | 17        |
 
 _(*)_ Especially useful for scale to zero scenario (AWS Lambda, Google Functions and so on).

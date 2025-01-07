@@ -32,7 +32,7 @@
 <br/>
     </td>
     <td style="width: 50%; font-size: 10px">
-      <img alt="Resources plotting for JIT application" src="../images/01_step_04_jit_plot_a.png" width="100%" />
+      <img alt="Resources plotting for JIT application" src="../images/01_step_04_jit_plot_b.png" width="100%" />
         <p style="text-align: center">Figure: Resources plotting for JIT application</p>
     </td>
   </tr>

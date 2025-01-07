@@ -102,7 +102,7 @@ This section contains the result of an optimized benchmark run :
 And the relative resource plotting :
 
 .Optimized AOT Benchmark plotting
-image::01_step_04_aot_optimized_plot_a.png["Optimized AOT Benchmark plotting"]
+image::01_step_04_aot_optimized_plot_b.png["Optimized AOT Benchmark plotting"]
 
 Let's compare the result with the xref:#step-04-benchmark-exec-sample-output[Unoptimized benchmark] (they have been run on the same system).
 

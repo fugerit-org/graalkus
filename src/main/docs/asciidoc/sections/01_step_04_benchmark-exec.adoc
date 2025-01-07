@@ -106,11 +106,11 @@ And the relative resource plotting :
 --
 [.left]
 .JIT Benchmark plotting
-image::01_step_04_jit_plot_a.png["JIT Benchmark plotting"]
+image::01_step_04_jit_plot_b.png["JIT Benchmark plotting"]
 
 [.left]
 .AOT Benchmark plotting
-image::01_step_04_aot_plot_a.png["AOT Benchmark plotting"]
+image::01_step_04_aot_plot_b.png["AOT Benchmark plotting"]
 --
 
 As you can see :

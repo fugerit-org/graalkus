@@ -32,7 +32,7 @@
 <br/>
     </td>
     <td style="width: 50%; font-size: 10px">
-      <img alt="Resources plotting for AOT PGO application" src="../images/01_step_04_aot_optimized_plot_a.png" width="100%" />
+      <img alt="Resources plotting for AOT PGO application" src="../images/01_step_04_aot_optimized_plot_b.png" width="100%" />
         <p style="text-align: center">Figure: Resources plotting for AOT PGO application</p>
     </td>
   </tr>
