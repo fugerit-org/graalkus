@@ -71,10 +71,18 @@ Requirement :
 
 * Container environment (Docker or Podman)
 
-Pick a docker compose file, for instance on docker run : 
+> Note: It is recommended to install the latest versions of [Docker Desktop](https://www.docker.com/products/docker-desktop/) or [Podman Desktop](https://podman-desktop.io/). 
+
+Pick a docker compose file (inside the [src/main/docker](src/main/docker)) and run by using docker compose or podman compose. Se example below: 
 
 ```shell
+# If you have a docker environment
+# This syntax of docker compose is available from then Docker Desktop 3.4
 docker compose -f src/main/docker/docker-compose.yml up -d
+
+# If you have a podman environment
+# This syntax of podman compose is available from the Podman 4.0
+podman compose -f src/main/docker/docker-compose.yml up -d
 ```
 
 NOTE: both amd64 and arm64 (including MacOS) [pre-built images](https://hub.docker.com/r/fugeritorg/graalkus) are available.
