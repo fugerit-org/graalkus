@@ -100,6 +100,8 @@ Start the application and run :
 ./src/main/script/bench-graph-siege.sh 
 ```
 
+The result output file is in the `target` directory.
+
 ## Run benchmark with h2load
 
 Requirement :
@@ -113,6 +115,8 @@ Start the application and run :
 ./src/main/script/bench-graph-h2-load.sh 
 ```
 
+The result output file is in the `target` directory.
+
 ## Run benchmark on different url
 
 Default for benchmark is to run on http://localhost:8080.
@@ -122,6 +126,8 @@ To run on a different url use the -u parameter, for instance :
 ```shell
 ./src/main/script/bench-graph-h2-load.sh -u http://localhost:8081
 ```
+
+The result output file is in the `target` directory.
 
 ## Run benchmark with plotting
 
@@ -140,3 +146,5 @@ or
 mvn package
 ./src/main/script/bench-graph-h2-load.sh -m JIT
 ```
+
+The result output file is in the `target` directory.
