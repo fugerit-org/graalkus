@@ -85,7 +85,7 @@ docker compose -f src/main/docker/docker-compose.yml up -d
 podman compose -f src/main/docker/docker-compose.yml up -d
 ```
 
-NOTE: both amd64 and arm64 (including MacOS) [pre-built images](https://hub.docker.com/r/fugeritorg/graalkus) are available.
+NOTE: both amd64 and arm64 (including macOS) [pre-built images](https://hub.docker.com/r/fugeritorg/graalkus) are available.
 
 ## Run benchmark with siege
 
@@ -125,7 +125,7 @@ To run on a different url use the -u parameter, for instance :
 
 ## Run benchmark with plotting
 
-To run benchmakr with plotting, psrecord should be installed.
+To run benchmark with plotting, psrecord should be installed.
 
 Build the application without launching it, and run : 
 
