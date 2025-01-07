@@ -110,7 +110,7 @@ Requirement :
 Start the application and run : 
 
 ```shell
-./src/main/script/bench-graph-h2load.sh 
+./src/main/script/bench-graph-h2-load.sh 
 ```
 
 ## Run benchmark on different url
