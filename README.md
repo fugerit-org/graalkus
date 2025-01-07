@@ -71,13 +71,21 @@ Requirement :
 
 * Container environment (Docker or Podman)
 
-Pick a docker compose file, for instance on docker run : 
+> Note: It is recommended to install the latest versions of [Docker Desktop](https://www.docker.com/products/docker-desktop/) or [Podman Desktop](https://podman-desktop.io/). 
+
+Pick a docker compose file (inside the [src/main/docker](src/main/docker)) and run by using docker compose or podman compose. Se example below: 
 
 ```shell
+# If you have a docker environment
+# This syntax of docker compose is available from then Docker Desktop 3.4
 docker compose -f src/main/docker/docker-compose.yml up -d
+
+# If you have a podman environment
+# This syntax of podman compose is available from the Podman 4.0
+podman compose -f src/main/docker/docker-compose.yml up -d
 ```
 
-NOTE: both amd64 and arm64 (including MacOS) [pre-built images](https://hub.docker.com/r/fugeritorg/graalkus) are available.
+NOTE: both amd64 and arm64 (including macOS) [pre-built images](https://hub.docker.com/r/fugeritorg/graalkus) are available.
 
 ## Run benchmark with siege
 
@@ -92,6 +100,8 @@ Start the application and run :
 ./src/main/script/bench-graph-siege.sh 
 ```
 
+The result output file is in the `target` directory.
+
 ## Run benchmark with h2load
 
 Requirement :
@@ -102,8 +112,10 @@ Requirement :
 Start the application and run : 
 
 ```shell
-./src/main/script/bench-graph-h2load.sh 
+./src/main/script/bench-graph-h2-load.sh 
 ```
+
+The result output file is in the `target` directory.
 
 ## Run benchmark on different url
 
@@ -115,9 +127,11 @@ To run on a different url use the -u parameter, for instance :
 ./src/main/script/bench-graph-h2-load.sh -u http://localhost:8081
 ```
 
+The result output file is in the `target` directory.
+
 ## Run benchmark with plotting
 
-To run benchmakr with plotting, psrecord should be installed.
+To run benchmark with plotting, psrecord should be installed.
 
 Build the application without launching it, and run : 
 
@@ -132,3 +146,5 @@ or
 mvn package
 ./src/main/script/bench-graph-h2-load.sh -m JIT
 ```
+
+The result output file is in the `target` directory.
