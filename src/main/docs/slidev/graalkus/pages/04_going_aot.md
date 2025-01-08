@@ -23,6 +23,9 @@ Some modifications to the project are needed. the main ones are :
     </profile>
 ```
 
+<arrow v-click="[4, 5]" x1="700" y1="300" x2="220" y2="200" color="#953" width="2" arrowSize="1" />
+
+
 2. exclude the relevant tests :
 
 ```java
@@ -30,3 +33,5 @@ Some modifications to the project are needed. the main ones are :
 ```
 
 </v-clicks>
+
+<arrow v-click="[6, 7]" x1="700" y1="350" x2="220" y2="480" color="#539" width="2" arrowSize="1" />
