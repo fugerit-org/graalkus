@@ -1,8 +1,5 @@
 # graalkus
 
-[![HTML - Documentation](https://img.shields.io/badge/HTML-Documentation-blue?style=for-the-badge)](https://graalkus.fugerit.org/book/ "Go to project HTML documentation")
-[![PDF - Documentation](https://img.shields.io/badge/PDF-Documentation-red?style=for-the-badge)](https://graalkus.fugerit.org/book/graalkus.pdf "Go to project PDF documentation")
-
 [![Keep a Changelog v1.1.0 badge](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.1.0-%23E05735)](https://github.com/fugerit-org/graalkus/blob/master/CHANGELOG.md)
 [![license](https://img.shields.io/badge/License-MIT%20License-teal.svg)](https://opensource.org/license/mit)
 [![code of conduct](https://img.shields.io/badge/conduct-Contributor%20Covenant-purple.svg)](https://github.com/fugerit-org/fj-universe/blob/main/CODE_OF_CONDUCT.md)
@@ -14,12 +11,30 @@
 [![Java build version](https://img.shields.io/badge/build%20on-GraalVM%2021+-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)](https://universe.fugerit.org/src/docs/versions/gvm21.html)
 [![Apache Maven](https://img.shields.io/badge/Apache%20Maven-3.9.0+-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)](https://universe.fugerit.org/src/docs/versions/maven3_9.html)
 
+## Documentation
+
+Documentation of this project has been produced with a doc-as-code approach.
+
+[Here you can find project documentation index](https://graalkus.fugerit.org/) published through GitHub pages.
+
+Introduction slides are available thanks to [Slidev](https://sli.dev/) : 
+
+[![Slideshow](https://img.shields.io/badge/HTML-Slideshow-greeb?style=for-the-badge)](https://graalkus.fugerit.org/graalkus-slidev/ "Go to project Slideshow")
+
+While [AsciiDoc](https://asciidoc.org/) full documentation is here :
+
+[![HTML - Documentation](https://img.shields.io/badge/HTML-Documentation-blue?style=for-the-badge)](https://graalkus.fugerit.org/book/ "Go to project HTML documentation")
+[![PDF - Documentation](https://img.shields.io/badge/PDF-Documentation-red?style=for-the-badge)](https://graalkus.fugerit.org/book/graalkus.pdf "Go to project PDF documentation")
+
+
 ## Quickstart
 
 Requirement :
 
 * maven 3.9.x
 * java 21+ (GraalVM for native version)
+
+NOTE: All benchmarks has been run on Oracle GraalVM 23.
 
 1. Verify the app
 
@@ -148,3 +163,31 @@ mvn package
 ```
 
 The result output file is in the `target` directory.
+
+## Build the documentation
+
+Requirement : 
+
+* NodeJS 20+
+* Mermaid CLI
+
+### AsciiDoc documentation
+
+[AsciiDoc](https://asciidoc.org/) source folder is located at : 
+
+[src/main/docs/asciidoc](src/main/docs/asciidoc)
+
+It is possible to build HTML and PDF documentation running : 
+
+```shell
+mvn install -Pdocs
+```
+
+Output will be in `target/site` directory.
+
+### Slidev slideshow
+
+[Slidev](https://sli.dev/) source folder is located at : 
+
+[src/main/docs/slidev/graalkus](src/main/docs/slidev/graalkus)
+
