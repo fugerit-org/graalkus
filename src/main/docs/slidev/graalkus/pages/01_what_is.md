@@ -1,34 +1,19 @@
+---
+layout: image-right
+image: 'https://raw.githubusercontent.com/fugerit-org/graalkus/0fc30d702894253d9fb4cf9a810271ba76e93a36/src/main/docs/slidev/graalkus/images/graalkus_qr.svg'
+---
+
 # What is Graalkus?
 
 Graalkus is a migration example from Java Just In Time (JIT) to Ahead Of Time (AOT) application.
 
-<table>
-  <tr>
-    <td style="width: 50%">
 Soon we will explore the demo project :
-<br/>
-<br/>
-<v-clicks depth="1">
-<ul>
-<li>Implementation - of JIT version</li>
-<li>Conversion - to AOT application</li>
-<li>Benchmark - of both versions</li>
-<li>Container - setup</li>
-<li>Deployment - on OpenShift in Slidev</li>
-</ul>
-</v-clicks>
-<br/>
-<br/>
-    </td>
-    <td style="width: 50%">
-      <img alt="QR Code Graalkus" src="../images/graalkus_qr.svg" width="100%" />
-    </td>
-  </tr>
-</table>
 
-
-  <br>
-  <br>
+* Implementation - of <span v-mark.circle.orange="1">JIT version</span>
+* Conversion - to <span v-mark.circle.blue="2">AOT application</span>
+* <span v-mark.circle.green="3">Benchmark</span> - of both versions
+* <span v-mark.circle.purple="4">Container</span> - setup
+* Deployment - on <span v-mark.circle.red ="5">OpenShift</span>
 
 Read more about [Graalkus](https://github.com/fugerit-org/graalkus).
 
