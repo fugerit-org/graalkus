@@ -54,11 +54,6 @@ Open the [swagger-ui](http://localhost:8080/q/swagger-ui/)
 
 Test available paths (for instance : [/doc/example.md](http://localhost:8080/doc/example.md))
 
-NOTE:
-
-* Powered by Quarkus 3.17.2
-* Using Fugerit Venus Doc 8.11.4 (extensions : fj-doc-base,fj-doc-freemarker,fj-doc-mod-fop,fj-doc-mod-opencsv)
-
 ## Native version
 
 If you picked only native modules, you should be able to build and run the AOT version (GraalVM 21+ needed).
