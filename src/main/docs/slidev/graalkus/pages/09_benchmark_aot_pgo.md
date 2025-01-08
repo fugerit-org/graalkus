@@ -1,6 +1,6 @@
 ---
 layout: image-right
-image: 'https://raw.githubusercontent.com/fugerit-org/graalkus/refs/heads/main/src/main/docs/slidev/graalkus/images/01_step_04_aot_plot_b.png'
+image: 'https://raw.githubusercontent.com/fugerit-org/graalkus/refs/heads/main/src/main/docs/slidev/graalkus/images/01_step_04_aot_optimized_plot_b.png'
 backgroundSize: 20em 80%
 ---
 
