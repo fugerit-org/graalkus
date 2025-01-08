@@ -1,17 +1,22 @@
+---
+layout: image-right
+image: 'https://raw.githubusercontent.com/fugerit-org/graalkus/refs/heads/main/src/main/docs/slidev/graalkus/images/01_step_04_jit_plot_b.png'
+backgroundSize: 20em 80%
+---
+
 # Benchmark JIT
 
-<table>
-  <tr>
-    <td style="width: 50%; font-size: 10px">
-
+<v-clicks depth="1">
 
 1. Run some load on the JIT application
 
-**./src/main/script/bench-graph-siege.sh -m JIT**
+```shell
+./src/main/script/bench-graph-siege.sh -m JIT
+```
 
-2. Check the load result : 
+2. Check the load result :
 
-<pre>
+```json
 {
   "transactions": 333324,
   "availability": 100,
@@ -26,18 +31,11 @@
   "longest_transaction": 0.01,
   "shortest_transaction": 0
 }
-</pre>
+```
 
-<br/>
-<br/>
-    </td>
-    <td style="width: 50%; font-size: 10px">
-      <img alt="Resources plotting for JIT application" src="../images/01_step_04_jit_plot_b.png" width="100%" />
-        <p style="text-align: center">Figure: Resources plotting for JIT application</p>
-    </td>
-  </tr>
-</table>
+<arrow v-click="[5, 6]" x1="400" y1="200" x2="280" y2="320" color="#953" width="2" arrowSize="1" />
 
+</v-clicks>
 
 <!--
 You can have `style` tag in markdown to override the style for the current page.
