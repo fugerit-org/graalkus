@@ -487,6 +487,85 @@
       </build>
     </profile>
 
+
+    <profile>
+      <id>slidev</id>
+      <properties>
+        <exec-plugin.version>3.5.0</exec-plugin.version>
+        <slidev-base-folder>${project.basedir}/src/main/docs/slidev/graalkus</slidev-base-folder>
+        <slidev-base-path>/graalkus-slidev</slidev-base-path>
+      </properties>
+      <build>
+        <defaultGoal>process-resources</defaultGoal>
+        <plugins>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>${exec-plugin.version}</version>
+            <executions>
+              <!-- Required: The following will ensure `npm install` is called
+           before anything else during the 'Default Lifecycle' -->
+              <execution>
+                <id>npm install (initialize)</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>initialize</phase>
+                <configuration>
+                  <executable>npm</executable>
+                  <arguments>
+                    <argument>install</argument>
+                    <argument>--legacy-peer-deps</argument>
+                  </arguments>
+                  <workingDirectory>${slidev-base-folder}</workingDirectory>
+                </configuration>
+              </execution>
+              <!-- Required: The following will ensure `npm install` is called
+           before anything else during the 'Clean Lifecycle' -->
+              <execution>
+                <id>npm install (clean)</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>pre-clean</phase>
+                <configuration>
+                  <executable>npm</executable>
+                  <arguments>
+                    <argument>install</argument>
+                    <argument>--legacy-peer-deps</argument>
+                  </arguments>
+                  <workingDirectory>${slidev-base-folder}</workingDirectory>
+                </configuration>
+              </execution>
+
+              <!-- Required: This following calls `npm run build` where 'build' is
+           the script name I used in my project, change this if yours is
+               different -->
+              <execution>
+                <id>npm run build (compile)</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>generate-sources</phase>
+                <configuration>
+                  <executable>npm</executable>
+                  <arguments>
+                    <argument>run</argument>
+                    <argument>build</argument>
+                  </arguments>
+                  <workingDirectory>${slidev-base-folder}</workingDirectory>
+                </configuration>
+              </execution>
+
+            </executions>
+
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
     <!-- sonar scan and coverage -->
     <profile>
       <id>sonarfugerit</id>

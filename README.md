@@ -191,3 +191,18 @@ Output will be in `target/site` directory.
 
 [src/main/docs/slidev/graalkus](src/main/docs/slidev/graalkus)
 
+To run the slideshow in dev mode just : 
+
+```shell
+cd src/main/docs/slidev/graalkus
+npm install
+npm run dev
+```
+
+For a production build : 
+
+```shell
+mvn clean install -Pslidev
+serve src/main/docs/slidev/graalkus
+```
+
