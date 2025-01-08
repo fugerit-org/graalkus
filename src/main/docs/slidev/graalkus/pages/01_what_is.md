@@ -1,6 +1,7 @@
 ---
 layout: image-right
 image: 'https://raw.githubusercontent.com/fugerit-org/graalkus/0fc30d702894253d9fb4cf9a810271ba76e93a36/src/main/docs/slidev/graalkus/images/graalkus_qr.svg'
+backgroundSize: 25em 80%
 ---
 
 # What is Graalkus?

@@ -6,10 +6,10 @@ The scenario for this project is a JIT application used generate documents in va
 
 Let's define every format as a feature, and the use of each format/feature : 
 
-- HTML : 40% 
-- MarkDown : 30%
-- AsciiDoc : 20%
-- PDF : 10%
+- <span v-mark.purple="1">HTML</span> : 40% 
+- <span v-mark.orange="2">MarkDown</span> : 30%
+- <span v-mark.green="3">AsciiDoc</span> : 20%
+- <span v-mark.blue="4">PDF</span> : 10%
 
 <!--
 You can have `style` tag in markdown to override the style for the current page.

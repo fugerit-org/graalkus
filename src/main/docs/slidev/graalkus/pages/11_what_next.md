@@ -8,7 +8,7 @@ https://graalkus.fugerit.org/
 
 It is possible to find deeper explanation of : 
 
-* Migration approach used
-* Profile Guided Optimization (PGO) with Quarkus
-* Deployment on a container environment (Docker/Podman)
-* Deployment on OpenShift
+* <span v-mark.blue="1">Migration approach used</span>
+* <span v-mark.purple="1">Profile Guided Optimization (PGO) with Quarkus</span>
+* <span v-mark.orange="1">Deployment on a container environment (Docker/Podman)</span>
+* <span v-mark.red="1">Deployment on OpenShift</span>
