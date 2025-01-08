@@ -16,6 +16,50 @@ function print() {
     printf "\033[1;34m$1\033[0m\n"
 }
 
+# Help for this script
+help() {
+
+	cat <<HERE
+
+$@
+
+Usage: ./bench-graph-h2-load.sh.sh [options]
+Options marked with * are required.
+
+Sample usage :
+./bench-graph-siege.sh.sh
+
+Options:
+--urlbase, -u
+  Base benchmark url (default : 'http://localhost:8080'
+--requests, -r
+  Total number of requests (default : 250000)
+--clients, -c
+  Total number of clients (default : 12)
+--basedir, -b
+  Base output dir (default : './target')
+  NOTE: output of the benchmark can be found in this folder
+--warmup, -w
+  Total number of warmup requests (default : 50000)
+--mode, -m
+  Running mode, (default : "")
+  if values is "JIT" will search for a 'quarkus-app/quarkus-run.jar' har in the base dir an run it trying to plot the process
+  if values is "AOT" will search for a 'graalkus*runner' executable in the base dir an run it trying to plot the process
+  any other values, it will except the application to be already running
+--application, -a
+  application pattern override for JIT or AOT mode. (for instance 'graalkus*optimized*runner' instead of 'graalkus*runner')
+--pdf, -p
+  normally benchmark will run only on feature supported by both AOT and JIT application.
+  As AOT application currently does not support 'pdf' output, this flag will enable running 'pdf' request too.
+  NOTE: so running it on pure AOT application, will lead to some failures.
+--options, -o
+  additional parameters to pass to siege
+--help, -h
+	Show this help
+HERE
+	exit 1
+}
+
 # Main entry point
 main() {
 

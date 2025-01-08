@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- help for benchmark scripts
+
 ### Changed
 
 - using image tag v1.2.2 for docker-compose and openshift yml
