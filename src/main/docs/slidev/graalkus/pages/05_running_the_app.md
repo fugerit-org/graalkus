@@ -1,26 +1,33 @@
+---
+layout: image-right
+image: 'https://raw.githubusercontent.com/fugerit-org/graalkus/refs/heads/main/src/main/docs/slidev/graalkus/images/functions_v1.png'
+---
+
 # Running the application
 
-<table>
-  <tr>
-    <td style="width: 50%">
 <v-clicks depth="1">
 
 1. Build the project :
 
-**mvn install-D**
+```shell
+mvn install -Dnative
+```
 
 2. Run the native executable
 
-**./target/graalkus-*-runner**
+```shell
+./target/graalkus-*-runner
+```
 
-3. Open test url :
+3. Open one of the test urls :
 
-http://localhost:8080/doc/example.html
+<http://localhost:8080/doc/example.html>
+
+<http://localhost:8080/doc/example.adoc>
+
+<http://localhost:8080/doc/example.mdc>
 
 </v-clicks>
-    </td>
-    <td style="width: 50%">
-      <img alt="Running the application" src="../images/function_html.png" width="100%" />
-    </td>
-  </tr>
-</table>
+
+
+
