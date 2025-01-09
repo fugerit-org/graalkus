@@ -32,7 +32,10 @@ function applyAll() {
     CURRENT_FILE=${BASE_DIR}/$script
     SCRIPT_FILE=${TEMP_DIR}/$script
     cp $CURRENT_FILE $SCRIPT_FILE
-    sed -i "s/<PROJECT_NAME>/$PROJECT_NAME/g; s/<CLUSTER_DOMAIN>/$CLUSTER_DOMAIN/g" "$SCRIPT_FILE"
+    content=$(cat $SCRIPT_FILE)
+    echo "${content//<PROJECT_NAME>/${PROJECT_NAME}}" > "$SCRIPT_FILE"
+    content=$(cat $SCRIPT_FILE)
+    echo "${content//<CLUSTER_DOMAIN>/${CLUSTER_DOMAIN}}" > "$SCRIPT_FILE"
     oc apply -f ${SCRIPT_FILE}
   done
 
