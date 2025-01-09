@@ -13,7 +13,7 @@
 
 ## Documentation
 
-Documentation of this project has been produced with a doc-as-code approach.
+NOTE: The documentation (HTML, PDF and slides) is produced with a doc-as-code approach. Only my IDE and GIT have been used. No office automation tools were harmed in the making of this project 😉.
 
 [Here you can find project documentation index](https://graalkus.fugerit.org/) published through GitHub pages.
 
