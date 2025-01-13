@@ -10,23 +10,3 @@ mvn quarkus:add-extension -Dextensions='smallrye-health'
 
 NOTE: this extension is needed to provide health check.
 
-We are not using the built-in link:https://quarkus.io/guides/deploying-to-openshift[OpenShift] extension, but it is possible to install it as well :
-
-There is a built-in Quarkus extension which make openshift deployment easy.
-
-Let's install the
-[source,shell]
-----
-mvn quarkus:add-extension -Dextensions='quarkus-openshift
-----
-
-And configure the route exposure :
-
-[source,yaml]
-----
-quarkus:
-  openshift:
-    route:
-      expose: true
-----
-

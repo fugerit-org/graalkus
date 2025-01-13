@@ -49,3 +49,5 @@ include::sections/03_step_03_benchmark.adoc[]
 include::sections/appendix-a.adoc[]
 
 include::sections/appendix-b.adoc[]
+
+include::sections/appendix-c.adoc[]

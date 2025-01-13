@@ -1,0 +1,57 @@
+[#appendix-3]
+== Appendix C : Quarkus OpenShift Extension
+
+Section xref:#step-02-quarkus-deployment[Graalkus deployment] covered installation of Graalkus project using Kubernetes descriptors.
+
+Alternatively it is possible to use the  built-in Quarkus link:https://quarkus.io/guides/deploying-to-openshift[OpenShift] extension
+
+=== Installation
+
+Let's install the
+
+[source,shell]
+----
+mvn quarkus:add-extension -Dextensions='quarkus-openshift'
+----
+
+=== Configuration
+
+And configure the route exposure :
+
+[source,yaml]
+----
+quarkus:
+  openshift:
+    route:
+      expose: true
+----
+
+=== Deployment
+
+First oc login is needed :
+
+[source,shell]
+----
+oc login --token=$token --server=$server
+----
+
+Then we install the JIT version
+
+[source,shell]
+----
+quarkus build \
+-Dquarkus.openshift.deploy=true \
+-Dquarkus.container-image.name=graalkus-ocp-jit \
+-Dquarkus.openshift.name=graalkus-ocp-jit
+----
+
+And the AOT version
+
+[source,shell]
+----
+quarkus build --native \
+-Dquarkus.native.container-build=true \
+-Dquarkus.openshift.deploy=true \
+-Dquarkus.container-image.name=graalkus-ocp-aot \
+-Dquarkus.openshift.name=graalkus-ocp-aot
+----
