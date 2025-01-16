@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- quarkus version 3.17.6
+- quarkus version 3.17.7
 - using image tag v1.2.2 for docker-compose and openshift yml
 
 ## [1.2.2] - 2025-01-06
