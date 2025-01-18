@@ -1,0 +1,74 @@
+# CI docker build native
+
+name: CI docker build native
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - develop
+  release:
+    types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-amd64:
+    name: Build image amd64
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: fugerit-org/psychic-actions/maven-container-publish@mcp
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          java-type: 'native'
+          java-distribution: 'graalvm'
+          java-version: '23'
+          maven-options: 'clean package -Dnative -Dquarkus.native.container-build=true'
+          docker-file: './src/main/docker/Dockerfile.native-micro'
+          docker-platforms: linux/amd64
+          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-amd64native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
+  build-arm64:
+    name: Build image arm64
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: fugerit-org/psychic-actions/maven-container-publish@mcp
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          java-type: 'native'
+          java-distribution: 'graalvm'
+          java-version: '23'
+          maven-options: 'clean package -Dnative -Dquarkus.native.container-build=true'
+          docker-file: './src/main/docker/Dockerfile.native-micro'
+          docker-platforms: linux/arm64
+          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-arm64native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
+  build-native:
+    name: Build multi platform native image
+    needs: [build-amd64, build-arm64]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Build native image
+        run: echo "build native image start"
+      - name: Login to Docker Hub
+        uses: docker/login-action@master
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull latest amd64 image
+        run: docker pull --platform linux/amd64 ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native
+      - name: Pull latest arm64 image
+        run: docker pull --platform linux/arm64 ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native
+      - name: Create multi platform image (amd64/arm64)
+        run: |
+          docker buildx imagetools create -t ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-native \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native  \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native
+      - name: Build native image
+        run: echo "build native image end"
