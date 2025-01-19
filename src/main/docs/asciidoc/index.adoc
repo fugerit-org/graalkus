@@ -46,6 +46,14 @@ include::sections/03_step_02_quarkus_deployment.adoc[]
 
 include::sections/03_step_03_benchmark.adoc[]
 
+include::sections/04_github-workflow.adoc[]
+
+include::sections/04_step_01_jit-workflow.adoc[]
+
+include::sections/04_step_02_aot-workflow.adoc[]
+
+include::sections/04_step_03_aot-pgo-workflow.adoc[]
+
 include::sections/appendix-a.adoc[]
 
 include::sections/appendix-b.adoc[]

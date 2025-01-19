@@ -1,0 +1,84 @@
+
+[#part-4-step-02-aot-worlflow]
+=== GitHub workflow : AOT
+
+This link:https://github.com/fugerit-org/graalkus/blob/2-review-container-publish-wokflow-usage-with-ubuntu-2404-arm/.github/workflows/docker_publish_native.yml[GitHub workflow] will build the multi-platform architecture for linux/amd64 and linux/arm64 platforms.
+
+NOTE: While the JIT version can be built only once, the native executable need to be built for every platform.
+
+==== 1. Build native image
+
+This job uses the matrix strategy to build amd64 and arm64 GraalVM native executables :
+
+[source,yaml]
+----
+  build-native-image:
+    name: Build native image
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ 'ubuntu-24.04', 'ubuntu-24.04-arm' ]
+        include:
+          - os: ubuntu-24.04
+            current_platform: 'amd64'
+          - os: ubuntu-24.04-arm
+            current_platform: 'arm64'
+    steps:
+      - name: 'print os'
+        run: echo ${{ matrix.os }}
+      - name: 'print current platform'
+        run: echo ${{ matrix.current_platform }}
+      - uses: fugerit-org/psychic-actions/maven-container-publish@mcp
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          java-type: 'native'
+          java-distribution: 'graalvm'
+          java-version: '23'
+          maven-options: 'clean package -Dnative -Dquarkus.native.container-build=true'
+          docker-file: './src/main/docker/Dockerfile.native-micro'
+          docker-platforms: linux/${{ matrix.current_platform }}
+          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-${{ matrix.current_platform }}native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
+----
+
+NOTE: In the past I was using a self-hosted runner based on OCI Ampere 4 machine to build the linux/arm64 image. Recently link:https://github.com/orgs/community/discussions/148648[Linux arm64 hosted runners are available for free in public repositories], so I switched to them.
+
+==== 2. Build the multi-platform docker image
+
+After the platform specific docker images are build, this job will combine them in one :
+
+[source,yaml]
+----
+  build-docker-image:
+    name: Build multi platform native image
+    needs: [build-native-image]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Build native image
+        run: echo "build native image start"
+      - name: Login to Docker Hub
+        uses: docker/login-action@master
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull latest amd64 image
+        run: docker pull --platform linux/amd64 ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native
+      - name: Pull latest arm64 image
+        run: docker pull --platform linux/arm64 ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native
+      - name: Create multi platform image latest (amd64/arm64)
+        run: |
+          docker buildx imagetools create -t ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-native \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native  \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native
+      - name: Create multi platform image current (amd64/arm64)
+        # using the latest tag as at this time should be an alias for ${{ github.ref_name }}
+        run: |
+          docker buildx imagetools create -t ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-native \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native  \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native
+      - name: Build native image
+        run: echo "build native image end"
+----
+
+NOTE: Most of the workflow is reusable as mainly GitHub standard variables are used.

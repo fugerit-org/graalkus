@@ -12,3 +12,4 @@ It is possible to find deeper explanation of :
 * <span v-mark.purple="1">Profile Guided Optimization (PGO) with Quarkus</span>
 * <span v-mark.orange="1">Deployment on a container environment (Docker/Podman)</span>
 * <span v-mark.red="1">Deployment on OpenShift</span>
+* <span v-mark.green="1">CI build with GitHub</span>

@@ -1,0 +1,25 @@
+
+[#part-4-ci-github-worlflow]
+== Part IV - CI, Build multi-platform image
+
+This section covers the project CI to build a container image in three flavours :
+
+. linux/amd64 and linux arm64 multi-platform JIT image
+. linux/amd64 and linux arm64 multi-platform AOT image
+. linux/amd64 and linux arm64 multi-platform Optimized (AOT) image
+
+Building a pushing to docker hub the following images :
+
+. fugeritorg/graalkus:latest
+. fugeritorg/graalkus:latest-native
+. fugeritorg/graalkus:latest-native-pgo
+
+NOTE: version specific tags for Docker repository link:https://hub.docker.com/layers/fugeritorg/graalkus[fugeritorg/graalkus] are also built.
+
+In the GitHub repository it is possible to find the relevant workflows :
+
+link:https://github.com/fugerit-org/graalkus/blob/main/.github/workflows/docker_publish.yml[https://github.com/fugerit-org/graalkus/blob/main/.github/workflows/docker_publish.yml]
+
+link:https://github.com/fugerit-org/graalkus/blob/2-review-container-publish-wokflow-usage-with-ubuntu-2404-arm/.github/workflows/docker_publish_native.yml[https://github.com/fugerit-org/graalkus/blob/2-review-container-publish-wokflow-usage-with-ubuntu-2404-arm/.github/workflows/docker_publish_native.yml]
+
+link:https://github.com/fugerit-org/graalkus/blob/2-review-container-publish-wokflow-usage-with-ubuntu-2404-arm/.github/workflows/docker_publish_native_pgo.yml[https://github.com/fugerit-org/graalkus/blob/2-review-container-publish-wokflow-usage-with-ubuntu-2404-arm/.github/workflows/docker_publish_native_pgo.yml]
