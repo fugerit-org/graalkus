@@ -1,0 +1,135 @@
+# CI with maven build and scan
+
+name: CI docker build native PGO
+
+# this workflow is responsible for building the native container image for this project by  :
+#
+# 1. build the amd64/arm64 native executables (GraalVM) with PGO and container images
+#    1.1 - Build instrumented executable
+#    1.2 - Run relevant workload
+#    1.3 - Build optimized executable
+# 2. create the multi-platform PGO image (linux/amd64 and linux/arm64)
+#
+# NOTE: The linux/arm64 image is likely to work on Apple Silicon architecture too.
+
+permissions:
+  contents: read
+
+on:
+  # triggers on develop
+  push:
+    branches:
+      - develop
+  # triggers on a new release
+  release:
+    types: [published]
+
+# only allow one workflow at time on the give activation
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # building optimized (PGO) native executables
+  build-native-image:
+    name: Build native image
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ 'ubuntu-24.04', 'ubuntu-24.04-arm' ]
+        include:
+          - os: ubuntu-24.04
+            current_platform: 'amd64'
+          - os: ubuntu-24.04-arm
+            current_platform: 'arm64'
+    steps:
+      - uses: actions/checkout@main
+        with:
+          # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
+      - name: Echo ref name trigger
+        run: echo ${{ github.ref_name }}
+      - name: Set up JDK 21
+        uses: actions/setup-java@main
+        with:
+          java-version: '23'
+          distribution: 'graalvm'
+          cache: 'maven'
+      - name: Cache Maven packages
+        uses: actions/cache@main
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Maven version
+        run: mvn -v
+        env:
+          # Needed to get some information about the pull request, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # SonarCloud access token should be generated from https://sonarcloud.io/account/security/
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # note : the workload steps could be different for every scenario
+      - name: Install h2load
+        run: sudo apt-get install nghttp2-client
+      - name: Install gcc
+        run: sudo apt-get install -f build-essential libz-dev zlib1g-dev
+      - name: Check h2load
+        run: h2load --version
+      - name: Build instrumented
+        run: 'mvn clean package -Dnative -Pinstrumented'
+      - name: Run workload
+        run: './src/main/script/bench-graph-h2-load.sh -m AOT'
+      - name: Build optimzed
+        run: 'mvn clean package -Dnative -Poptimized'
+        # using action https://github.com/marketplace/actions/build-and-push-docker-images
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@master
+      - name: Login to Docker Hub
+        uses: docker/login-action@master
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@master
+        with:
+          context: .
+          file: ./src/main/docker/Dockerfile.native-debian
+          platforms: linux/${{ matrix.current_platform }}
+          push: true
+          tags: fugeritorg/${{github.event.repository.name}}:${{ github.ref_name }}-${{ matrix.current_platform }}native-pgo,fugeritorg/${{github.event.repository.name}}:latest-${{ matrix.current_platform }}native-pgo
+  # creating multi-platform optimized image
+  build-docker-image:
+    name: Build multi platform image (PGO)
+    needs: [build-native-image]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 'print os'
+        run: echo ${{ matrix.os }}
+      - name: 'print current platform'
+        run: echo ${{ matrix.current_platform }}
+      - name: Build native image start
+        run: echo "build native image start"
+      - name: Login to Docker Hub
+        uses: docker/login-action@master
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull native amd64 image
+        run: docker pull --platform linux/amd64 ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native-pgo
+      - name: Pull native arm64 image
+        run: docker pull --platform linux/arm64 ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native-pgo
+      - name: Create multi platform image latest (amd64/arm64)
+        run: |
+          docker buildx imagetools create -t ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-native-pgo \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native-pgo  \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native-pgo
+      - name: Create multi platform image current (amd64/arm64)
+        # using the latest tag as at this time should be an alias for ${{ github.ref_name }}
+        run: |
+          docker buildx imagetools create -t ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-native-pgo \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native-pgo  \
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-arm64native-pgo
+      - name: Build native image end
+        run: echo "build native image end"

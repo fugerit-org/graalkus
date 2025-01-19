@@ -13,9 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - help for benchmark scripts
 - updated readme with AsciiDoc build information
 - updated readme with Slidev build information
+- Part IV - CI, Build multi-platform image (GitHub)
 
 ### Changed
 
+- CI to build docker image now use the new [GitHub linux arm64 runners](https://github.com/orgs/community/discussions/148648).
 - quarkus version 3.17.7
 - using image tag v1.2.2 for docker-compose and openshift yml
 
