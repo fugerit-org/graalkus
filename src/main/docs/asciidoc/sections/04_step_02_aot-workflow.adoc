@@ -37,7 +37,7 @@ This job uses the matrix strategy to build amd64 and arm64 GraalVM native execut
           maven-options: 'clean package -Dnative -Dquarkus.native.container-build=true'
           docker-file: './src/main/docker/Dockerfile.native-micro'
           docker-platforms: linux/${{ matrix.current_platform }}
-          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-${{ matrix.current_platform }}native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-amd64native
+          docker-tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:${{ github.ref_name }}-${{ matrix.current_platform }}native,${{ secrets.DOCKERHUB_USERNAME }}/${{github.event.repository.name}}:latest-${{ matrix.current_platform }}64native
           dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
 ----
