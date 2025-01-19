@@ -8,14 +8,13 @@
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
     <surefire-plugin.version>3.3.1</surefire-plugin.version>
-    <quarkus-freemarker-version>1.1.0</quarkus-freemarker-version>
     <quarkus.platform.version>3.17.7</quarkus.platform.version>
     <skipITs>true</skipITs>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <compiler-plugin.version>3.13.0</compiler-plugin.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <fj-doc-version>8.11.7</fj-doc-version>
+    <fj-doc-version>8.11.9</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <base-native-build-args>-H:IncludeResources=graalkus/fm-doc-process-config.xml,-H:IncludeResources=graalkus/template/document.ftl</base-native-build-args>
     <quarkus.native.additional-build-args>${base-native-build-args}</quarkus.native.additional-build-args>
@@ -63,11 +62,6 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkiverse.freemarker</groupId>
-      <artifactId>quarkus-freemarker</artifactId>
-      <version>${quarkus-freemarker-version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

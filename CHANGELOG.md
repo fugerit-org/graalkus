@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI to build docker image now use the new [GitHub linux arm64 runners](https://github.com/orgs/community/discussions/148648).
 - quarkus version 3.17.7
 - using image tag v1.2.2 for docker-compose and openshift yml
+- fj-doc-version 8.11.9
 
 ## [1.2.2] - 2025-01-06
 
