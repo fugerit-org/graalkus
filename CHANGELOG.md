@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- setup quarkus-info extension
 - quarkus version 3.18.1
 - using image tag v1.3.0 for docker-compose and openshift yml
 
