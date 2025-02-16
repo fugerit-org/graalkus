@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - quarkus version 3.18.3
 - using image tag v1.3.0 for docker-compose and openshift yml
 
+### Fixed
+
+- docs, slidev : dompurify 3.2.4+ <https://github.com/fugerit-org/graalkus/security/dependabot/4>
+
 ## [1.3.0] - 2025-01-19
 
 ### Added

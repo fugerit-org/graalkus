@@ -12,6 +12,7 @@
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "katex": "^0.16.21",
+    "dompurify": "^3.2.4",
     "vue": "^3.5.13"
   }
 }
