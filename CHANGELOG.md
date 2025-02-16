@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- docs, slidev : esbuild 0.25.0+ <https://github.com/fugerit-org/graalkus/security/dependabot/3>
 - docs, slidev : dompurify 3.2.4+ <https://github.com/fugerit-org/graalkus/security/dependabot/4>
 
 ## [1.3.0] - 2025-01-19
