@@ -29,7 +29,7 @@ concurrency:
 jobs:
   # building native executables
   build-native-image:
-    name: Build native image
+    name: Build native image ${{ matrix.current_platform }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
