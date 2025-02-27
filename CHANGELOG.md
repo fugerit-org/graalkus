@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- quarkus.platform.group-id from io.quarkus to io.quarkus.platform 
 - quarkus version 3.19.1
 - Change on the name of jobs for docker publish native workflows
 
