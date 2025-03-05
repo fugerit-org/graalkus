@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - upgrade docker file to ubi-9 <https://quarkus.io/blog/quarkus-3-19-1-released/>
 - quarkus.platform.group-id from io.quarkus to io.quarkus.platform 
 - quarkus version 3.19.2
+- fj-doc-version 8.12.2
 - Change on the name of jobs for docker publish native workflows
 
 ## [1.3.1] - 2025-02-16
