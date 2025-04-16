@@ -49,7 +49,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           java-type: 'native'
           java-distribution: 'graalvm'
-          java-version: '23'
+          java-version: '24'
           maven-options: 'clean package -Dnative -Dquarkus.native.container-build=true'
           docker-file: './src/main/docker/Dockerfile.native-micro'
           docker-platforms: linux/${{ matrix.current_platform }}
