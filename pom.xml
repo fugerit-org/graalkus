@@ -14,7 +14,7 @@
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <compiler-plugin.version>3.14.0</compiler-plugin.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <fj-doc-version>8.12.6</fj-doc-version>
+    <fj-doc-version>8.12.8</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <base-native-build-args>-H:IncludeResources=graalkus/fm-doc-process-config.xml,-H:IncludeResources=graalkus/template/document.ftl</base-native-build-args>
     <quarkus.native.additional-build-args>${base-native-build-args}</quarkus.native.additional-build-args>
