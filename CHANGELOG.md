@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- new banner image
 - quarkus version 3.22.1
 
 ## [1.3.3] - 2025-04-16
