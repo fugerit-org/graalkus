@@ -26,7 +26,7 @@ services:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:v1.3.0
+    image: fugeritorg/graalkus:v1.3.4
     container_name: graalkus-jit-mixed
     hostname: jit
     labels:
@@ -49,7 +49,7 @@ services:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:v1.3.0-native-pgo
+    image: fugeritorg/graalkus:v1.3.4-native-pgo
     container_name: graalkus-aot-mixed
     hostname: aot
     labels:
@@ -72,7 +72,7 @@ services:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:v1.3.0
+    image: fugeritorg/graalkus:v1.3.4
     container_name: graalkus-jit-mixed-std
     hostname: jit-std
     restart: always

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: graalkus-jit-std
-          image: docker.io/fugeritorg/graalkus:v1.3.0
+          image: docker.io/fugeritorg/graalkus:v1.3.4
           ports:
             - name: http
               containerPort: 8080

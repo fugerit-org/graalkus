@@ -6,7 +6,7 @@ services:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:v1.3.0
+    image: fugeritorg/graalkus:v1.3.4
     container_name: graalkus-jit-limit
     restart: always
     ports:
@@ -23,7 +23,7 @@ services:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:v1.3.0-native
+    image: fugeritorg/graalkus:v1.3.4-native
     container_name: graalkus-aot-limit
     restart: always
     ports:
@@ -40,7 +40,7 @@ services:
     # it is possible to pick more options from :
     # https://hub.docker.com/repository/docker/fugeritorg/graalkus/general
     # or build your own image locally.
-    image: fugeritorg/graalkus:v1.3.0-native-pgo
+    image: fugeritorg/graalkus:v1.3.4-native-pgo
     container_name: graalkus-aot-optimized-limit
     restart: always
     ports:
