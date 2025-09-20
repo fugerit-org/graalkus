@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- native workflows on graalvm 25 (instead of 24)
 - fj-doc-version 8.16.2
 - quarkus version 3.26.4
 
