@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- fj-doc-version 8.16.2
 - quarkus version 3.26.4
 
 ## [1.3.5] - 2025-08.17
